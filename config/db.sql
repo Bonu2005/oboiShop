@@ -26,7 +26,7 @@ CREATE TABLE brands(
 CREATE TABLE country(
     id INT AUTO_INCREMENT PRIMARY KEY,
     name_uz VARCHAR(255),
-    name_ru VARCHAR(255),
+    name_ru VARCHAR(255)
 );
 
 CREATE TABLE categoryItem(
@@ -54,7 +54,7 @@ CREATE Table product(
     size VARCHAR(55)
 );
 
-CREATE Table order(
+CREATE Table orders(
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     Foreign Key (user_id) REFERENCES user(id),
@@ -66,7 +66,7 @@ CREATE TABLE orderItem(
     product_id INT NOT NULL,
     Foreign Key (product_id) REFERENCES product(id),
     order_id INT NOT NULL,
-    Foreign Key (order_id) REFERENCES order(id),
+    Foreign Key (order_id) REFERENCES orders(id),
     total_count INT NOT NULL,
     total_price INT NOT NULL
 );
