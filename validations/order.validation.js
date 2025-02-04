@@ -5,5 +5,5 @@ export function orderValidation(data){
         user_id: Joi.number().positive().required(),
         total_price: Joi.number().positive().required()
     })
-    return orderSchema.validate(data)
+    return orderSchema.validate(data);
 }
