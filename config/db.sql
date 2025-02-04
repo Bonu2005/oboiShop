@@ -54,6 +54,7 @@ CREATE Table product(
     size VARCHAR(55)
 );
 
+
 CREATE Table orders(
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
