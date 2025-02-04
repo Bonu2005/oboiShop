@@ -1,7 +1,15 @@
 import db from "../config/db.js"
+import { brandsSchema } from "../validations/validations.js"
 
 async function findAll(req, res) {
     try {
+        if (req.query.name_uz) {
+            let [data] = await db.query("SELECT * FROM brands WHERE name_uz = ?", [req.query.name_uz])
+            return res.send(data)
+        } else if (req.query.name_ru) {
+            let [data] = await db.query("SELECT * FROM brands WHERE name_ru = ?", [req.query.name_ru])
+            return res.send(data)
+        }
         let [data] = await db.query("SELECT * FROM brands")
         res.send(data)
     } catch (error) {
@@ -19,11 +27,15 @@ async function findOne(req, res) {
 };
 async function create(req, res) {
     try {
-        let { name_uz, name_ru, image } = req.body
+        let { error, value } = brandsSchema.validate(req.body)
+        if (error) {
+            return res.send({ validateError: error.details[0].error });
+        }
+        let { name_uz, name_ru } = req.body
+        let image = req.file.filename
         let [newItem] = await db.query("INSERT INTO brands (name_uz, name_ru, image) VALUES (?, ?, ?)", [name_uz, name_ru, image])
         if (newItem.affectedRows == 0) {
-            res.status(400).send({ message: "not created ❌" })
-            return
+            return res.status(400).send({ message: "not created ❌" })
         }
         let [item] = await db.query("SELECT * FROM brands WHERE id = ?", [newItem.insertId])
         res.json(item[0])

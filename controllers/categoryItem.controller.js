@@ -1,4 +1,5 @@
 import db from "../config/db.js"
+import { categoryItemSchema } from "../validations/validations.js";
 
 async function findAll(req, res) {
     try {
@@ -19,11 +20,14 @@ async function findOne(req, res) {
 };
 async function create(req, res) {
     try {
+        let { error, value } = categoryItemSchema.validate(req.body)
+        if (error) {
+            return res.send({ validateError: error.details[0].error });
+        }
         let { category_id, product_id } = req.body
         let [newItem] = await db.query("INSERT INTO categoryItem (category_id, product_id) VALUES (?, ?)", [category_id, product_id])
         if (newItem.affectedRows == 0) {
-            res.status(400).send({ message: "not created ❌" })
-            return
+            return res.status(400).send({ message: "not created ❌" })
         }
         let [item] = await db.query("SELECT * FROM categoryItem WHERE id = ?", [newItem.insertId])
         res.json(item[0])
