@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { createProduct, deleteProduct, getAllProducts, getOneProduct, updateProduct } from "../controllers/product.controller.js";
+import { createProduct, deleteProduct, getAllProducts, getOneProduct, getProductsByBrend, getProductsByCountry, updateProduct } from "../controllers/product.controller.js";
+import passedRole from "../middleware/rolePolice.js";
+import selfPolice from "../middleware/selfPolice.js";
+import middleWare from "../middleware/token.middleware.js";
 import upload from "../multer/multer.js";
 
 let productRouter = Router()
@@ -59,6 +62,9 @@ let productRouter = Router()
 */
 
 productRouter.get("/products", getAllProducts)
+
+productRouter.get("/productByCountry/:id", getProductsByCountry)
+productRouter.get("/productByBrand/:id", getProductsByBrend)
 
 
 /**
@@ -196,7 +202,7 @@ productRouter.get("/products/:id", getOneProduct)
  */
 
 
-productRouter.post("/products", createProduct)
+productRouter.post("/products", upload.single("image"), middleWare, passedRole(["admin", "superadmin"]), createProduct)
 
 
 /**
@@ -253,7 +259,7 @@ productRouter.post("/products", createProduct)
  *         description: "Internal server error"
 */
 
-productRouter.patch("/products/:id", updateProduct)
+productRouter.patch("/products/:id", middleWare, selfPolice(["admin", "superadmin"]), updateProduct)
 
 
 /**
@@ -310,6 +316,6 @@ productRouter.patch("/products/:id", updateProduct)
  *         description: "Internal server error"
 */
 
-productRouter.delete("/products/:id", deleteProduct)
+productRouter.delete("/products/:id", middleWare, passedRole(["admin", "superadmin"]), deleteProduct)
 
 export default productRouter

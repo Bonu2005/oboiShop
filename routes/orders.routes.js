@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { createOrder, deleteOrder, getOneOrder, getOrder, updateOrder } from "../controllers/order.controller.js";
+import middleWare from "../middleware/token.middleware.js";
 
 const ordersRouter = Router()
 
@@ -38,7 +39,7 @@ const ordersRouter = Router()
  *         description: "Internal server error"
 */
 
-ordersRouter.get("/orders", getOrder)
+ordersRouter.get("/orders", middleWare, getOrder)
 
 
 /**
@@ -75,7 +76,7 @@ ordersRouter.get("/orders", getOrder)
  *         description: "Internal server error"
 */
 
-ordersRouter.get("/orders/:id", getOneOrder)
+ordersRouter.get("/orders/:id", middleWare, getOneOrder)
 
 
 /**
@@ -118,7 +119,7 @@ ordersRouter.get("/orders/:id", getOneOrder)
  *         description: "Internal server error"
 */
 
-ordersRouter.post("/orders", createOrder)
+ordersRouter.post("/orders", middleWare, createOrder)
 
 
 /**
@@ -155,7 +156,8 @@ ordersRouter.post("/orders", createOrder)
  *         description: "Internal server error"
 */
 
-ordersRouter.patch("/orders/:id", updateOrder)
+ordersRouter.patch("/orders/:id", middleWare,  updateOrder)
+
 
 
 /**
@@ -192,6 +194,6 @@ ordersRouter.patch("/orders/:id", updateOrder)
  *         description: "Internal server error"
 */
 
-ordersRouter.delete("/orders/:id", deleteOrder)
+ordersRouter.delete("/orders/:id", middleWare, deleteOrder)
 
 export default ordersRouter

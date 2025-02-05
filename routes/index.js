@@ -10,7 +10,7 @@ import countryRoute from "./country.routes.js";
 
 let mainRoute = Router()
 
-mainRoute.use("/",userRoute)
+mainRoute.use("/", userRoute)
 mainRoute.use("/", productRouter)
 mainRoute.use("/", orderItemRouter)
 mainRoute.use("/", ordersRouter)

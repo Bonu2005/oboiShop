@@ -3,7 +3,7 @@ import { orderItemValidation } from "../validations/orderItem.validation.js";
 
 async function getOrderItems(req, res){
     try {
-        let [orderItems] = await db.query("select * from orderItem")
+        let [orderItems] = await db.query("select * from orderItem inner join product on product.id = orderItem.product_id")
         res.status(200).send(orderItems)
     } catch (error) {
         console.log(error.message);
@@ -13,7 +13,7 @@ async function getOrderItems(req, res){
 async function getOneOrderItem(req, res){
     try {
         let {id} = req.params
-        let [orderItem] = await db.query("select * from orderItem where id=?", [id])
+        let [orderItem] = await db.query("select * from orderItem inner join product on product.id = orderItem.product_id where orderItem.id=?", [id])
         res.status(200).send(orderItem)
     } catch (error) {
         console.log(error.message);

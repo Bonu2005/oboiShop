@@ -1,5 +1,8 @@
 import { Router } from "express";
 import { createOrderItem, deleteOrderItem, getOneOrderItem, getOrderItems, updateOrderItem } from "../controllers/orderItem.controller.js";
+import selfPolice from "../middleware/selfPolice.js";
+import passedRole from "../middleware/rolePolice.js";
+import middleWare from "../middleware/token.middleware.js";
 
 let orderItemRouter = Router()
 
@@ -38,7 +41,7 @@ let orderItemRouter = Router()
  *         description: "Internal server error"
 */
 
-orderItemRouter.get("/orderItem", getOrderItems)
+orderItemRouter.get("/orderItem", middleWare, getOrderItems)
 
 
 /**
@@ -73,9 +76,9 @@ orderItemRouter.get("/orderItem", getOrderItems)
  *                     type: integer
  *       500:
  *         description: "Internal server error"
- */
+*/
 
-orderItemRouter.get("/orderItem/:id", getOneOrderItem)
+orderItemRouter.get("/orderItem/:id", middleWare, getOneOrderItem)
 
 
 /**
@@ -116,7 +119,7 @@ orderItemRouter.get("/orderItem/:id", getOneOrderItem)
  *         description: "Internal server error"
 */
 
-orderItemRouter.post("/orderItem", createOrderItem)
+orderItemRouter.post("/orderItem", passedRole(["admin", "superadmin"]), createOrderItem)
 
 
 /**
@@ -151,9 +154,9 @@ orderItemRouter.post("/orderItem", createOrderItem)
  *                     type: integer
  *       500:
  *         description: "Internal server error"
- */
+*/
 
-orderItemRouter.patch("/orderItem/:id", updateOrderItem)
+orderItemRouter.patch("/orderItem/:id", selfPolice(["admin"]), updateOrderItem)
 
 
 /**
@@ -190,6 +193,6 @@ orderItemRouter.patch("/orderItem/:id", updateOrderItem)
  *         description: "Internal server error"
 */
 
-orderItemRouter.delete("/orderItem/:id", deleteOrderItem)
+orderItemRouter.delete("/orderItem/:id", passedRole(["admin", "superadmin"]), deleteOrderItem)
 
 export default orderItemRouter

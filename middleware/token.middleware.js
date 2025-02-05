@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken"
 import { config } from "dotenv"
 config()
 
-const middleWare= (req,res,next)=>{
+const middleWare = (req,res,next)=>{
     let token = req.header("Authorization")
     if(!token){
         res.status(400).json({message:"not authorized"})

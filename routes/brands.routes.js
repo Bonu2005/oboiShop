@@ -123,7 +123,6 @@ brandsRoute.get("/brands/:id", findOne)
 
 brandsRoute.post("/brands", upload.single("image"), create)
 
-
 /**
  * @swagger
  * /brands/{id}:
