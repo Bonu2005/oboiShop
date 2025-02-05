@@ -38,7 +38,7 @@ async function create(req, res) {
             return res.status(400).send({ message: "not created ❌" })
         }
         let [item] = await db.query("SELECT * FROM category WHERE id = ?", [newItem.insertId])
-        res.json(item[0])
+        res.json(item)
     } catch (error) {
         console.log(error);
     }
