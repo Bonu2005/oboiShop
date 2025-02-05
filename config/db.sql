@@ -56,6 +56,7 @@ CREATE Table product(
     image VARCHAR(255)
 );
 
+
 CREATE Table orders(
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
