@@ -96,13 +96,4 @@ async function getProductsByBrend(req, res) {
     }
 }
 
-async function getProductsByBrend(req, res) {
-    try {
-        let { id } = req.params
-        let [products] = await db.query("select * from products where id = ?", [id])
-    } catch (error) {
-        console.log(error.message);
-    }
-}
-
 export { getAllProducts, getOneProduct, createProduct, updateProduct, getProductsByBrend, getProductsByCountry, deleteProduct, getProductsByCategory }

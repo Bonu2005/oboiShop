@@ -1,6 +1,6 @@
 import db from "../config/db.js";
 import api from "../models/axios.js";
-import bcryptjs from "bcryptjs"
+// import bcryptjs from "bcryptjs"
 import otp from "otplib"
 import { userValidation } from "../validations/user.validation.js";
 import jwt from "jsonwebtoken";
