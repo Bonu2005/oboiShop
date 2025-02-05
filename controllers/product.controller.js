@@ -1,6 +1,6 @@
 import db from "../config/db.js"
 import { productValidation } from "../validations/product.validation.js";
-
+import { promises as fs}  from "fs"
 async function getAllProducts(req, res) {
     try {
         let [products] = await db.query("select * from product")
@@ -22,18 +22,38 @@ async function getOneProduct(req, res) {
 
 async function createProduct(req, res) {
     try {
-        let { data } = req.body
-        let { error, value } = productValidation(req.body)
-        if (error) {
-            return res.status(400).send({ msg: error.details[0].message })
+        if (!req.file) {
+            return res.status(400).json({ message: 'No file uploaded' });
         }
-        let { filename } = req.file
-        let { name_uz, name_ru, brand_id, country_id, price, old_price, available, decription_uz, decription_ru, washable, size } = req.body
+        let {filename}=req.file
+        let data=req.body
+        let {value,error}=productValidation(data)
+        if(error){
+            
+            res.status(400).json({message:error.message})
+            await fs.unlink(`./uploads/${filename}`) 
+            return
+        }
+        // let {id}=req.malumot
+        let newOne={
+           
+            ...data,
+            image:filename,
+            // owner:id
+           
+        }
+        
+        console.log(newOne.image);
+        
         let createdProduct = await db.query("insert into product(name_uz, name_ru, brand_id, country_id, price,  old_price, available, decription_uz, decription_ru, washable, size, image) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            [name_uz, name_ru, brand_id, country_id, price, old_price, available, decription_uz, decription_ru, washable, size, filename])
+            [newOne.name_uz, newOne.name_ru, newOne.brand_id, newOne.country_id, newOne.price, newOne.old_price, newOne.available, newOne.decription_uz, newOne.decription_ru, newOne.washable, newOne.size, newOne.image])
+            console.log(createdProduct);
+        
+            
         res.status(200).send("Product successfully created!!!")
     } catch (error) {
-        console.log(error.message);
+         
+        res.status(400).send({error:error.message})
     }
 }
 

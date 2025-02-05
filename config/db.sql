@@ -1,6 +1,6 @@
 CREATE DATABASE oboiShop;
 use oboiShop;
-
+DROP DATABASE oboiShop;
 CREATE Table user(
     id int PRIMARY KEY AUTO_INCREMENT,
     fullName VARCHAR(100),

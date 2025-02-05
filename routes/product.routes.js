@@ -371,6 +371,7 @@ productRouter.get("/products/:id", getOneProduct)
  */
 
 
+productRouter.post("/products", upload.single("image"), createProduct)
 
 
 /**

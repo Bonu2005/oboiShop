@@ -6,8 +6,8 @@ const brandsSchema = joi.object({
 });
 
 const countrySchema = joi.object({
-    name_uz: joi.string().required(),
-    name_ru: joi.string().required()
+    name_uz: joi.string(),
+    name_ru: joi.string()
 });
 
 const categorySchema = joi.object({
