@@ -29,7 +29,7 @@ async function create(req, res) {
     try {
         let { error, value } = countrySchema.validate(req.body)
         if (error) {
-            return res.send({ validateError: error.details[0].error });
+            return res.send({ validateError: error.details[0].message });
         }
         let { name_uz, name_ru } = req.body
         let [newItem] = await db.query("INSERT INTO country (name_uz, name_ru) VALUES (?, ?)", [name_uz, name_ru])

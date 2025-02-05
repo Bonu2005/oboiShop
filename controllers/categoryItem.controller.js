@@ -22,7 +22,7 @@ async function create(req, res) {
     try {
         let { error, value } = categoryItemSchema.validate(req.body)
         if (error) {
-            return res.send({ validateError: error.details[0].error });
+            return res.send({ validateError: error.details[0].message });
         }
         let { category_id, product_id } = req.body
         let [newItem] = await db.query("INSERT INTO categoryItem (category_id, product_id) VALUES (?, ?)", [category_id, product_id])

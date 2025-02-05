@@ -29,11 +29,14 @@ async function create(req, res) {
     try {
         let { error, value } = categorySchema.validate(req.body)
         if (error) {
-            return res.send({ validateError: error.details[0].error });
+            return res.send({ validateError: error.details[0].message });
         }
         let { name_uz, name_ru } = req.body
-        let image = req.file.filename
-        let [newItem] = await db.query("INSERT INTO category (name_uz, name_ru, image) VALUES (?, ?, ?)", [name_uz, name_ru, image])
+        if (!req.file) {
+            return res.status(400).send({ message: "Rasm yuklang!" });
+        }
+        let {filename} = req.file
+        let [newItem] = await db.query("INSERT INTO category (name_uz, name_ru, image) VALUES (?, ?, ?)", [name_uz, name_ru, filename])
         if (newItem.affectedRows == 0) {
             return res.status(400).send({ message: "not created ❌" })
         }
