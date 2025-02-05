@@ -3,7 +3,6 @@ import { config } from "dotenv"
 import mainRoute from "./routes/index.js"
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import mainRoute from "./routes/index.js"
 
 config()
 
