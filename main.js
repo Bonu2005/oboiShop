@@ -17,7 +17,7 @@ const options = {
         },
         servers: [
             {
-                url: "http://localhost:3000/oboi/docs",
+                url: "http://localhost:3000",
             },
         ],
     },
@@ -30,7 +30,7 @@ const app = express()
 app.use(express.json())
 
 app.use("/", mainRoute)
-app.use("/oboi/docs", swaggerUi.serve, swaggerUi.setup(specs));
+app.use("/", swaggerUi.serve, swaggerUi.setup(specs));
 
 app.listen(process.env.PORT, () => {
     console.log(`server is run on PORT ${process.env.PORT}`);

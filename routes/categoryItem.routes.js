@@ -3,14 +3,13 @@ import { create, findAll, findOne, remove, update } from "../controllers/categor
 
 const categoryItemRoute = Router()
 
-categoryItemRoute.get("/categoryItem", findAll)
 
 /**
  * @swagger
  * tags:
  *   name: CategoryItem
  *   description: Category management endpoints
- */
+*/
 
 /**
  * @swagger
@@ -39,10 +38,11 @@ categoryItemRoute.get("/categoryItem", findAll)
  *                     type: string
  *       500:
  *         description: "Internal server error"
- */
+*/
+
+categoryItemRoute.get("/categoryItem", findAll)
 
 
-categoryItemRoute.get("/categoryItem/:id", findOne)
 
 /**
  * @swagger
@@ -51,6 +51,13 @@ categoryItemRoute.get("/categoryItem/:id", findOne)
  *     summary: "Get one from CategoryItem"
  *     description: "Retrieve one available categoryItem from id"
  *     tags: [CategoryItem]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Numeric ID of the categoryItem to retrieve.
+ *         schema:
+ *           type: integer
  *     responses:
  *       200:
  *         description: "a categoryItem"
@@ -69,9 +76,10 @@ categoryItemRoute.get("/categoryItem/:id", findOne)
  *                     type: integer
  *       500:
  *         description: "Internal server error"
- */
+*/
 
-categoryItemRoute.post("/categoryItem", create)
+categoryItemRoute.get("/categoryItem/:id", findOne)
+
 
 /**
  * @swagger
@@ -80,6 +88,17 @@ categoryItemRoute.post("/categoryItem", create)
  *     summary: "Post category for categoryItem"
  *     description: "Post new categoryItem"
  *     tags: [CategoryItem]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               category_id:
+ *                 type: integer
+ *               product_id:
+ *                 type: integer
  *     responses:
  *       200:
  *         description: "post new categoryItem"
@@ -98,9 +117,10 @@ categoryItemRoute.post("/categoryItem", create)
  *                     type: integer
  *       500:
  *         description: "Internal server error"
- */
+*/
 
-categoryItemRoute.patch("/categoryItem/:id", update)
+categoryItemRoute.post("/categoryItem", create)
+
 
 /**
  * @swagger
@@ -109,6 +129,13 @@ categoryItemRoute.patch("/categoryItem/:id", update)
  *     summary: "Update something from one categoryItem"
  *     description: "Post new categoryItem"
  *     tags: [CategoryItem]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Numeric ID of the categoryItem to retrieve.
+ *         schema:
+ *           type: integer
  *     responses:
  *       200:
  *         description: "update categoryItem"
@@ -127,9 +154,10 @@ categoryItemRoute.patch("/categoryItem/:id", update)
  *                     type: integer
  *       500:
  *         description: "Internal server error"
- */
+*/
 
-categoryItemRoute.delete("/categoryItem/:id", remove)
+categoryItemRoute.patch("/categoryItem/:id", update)
+
 
 /**
  * @swagger
@@ -138,6 +166,13 @@ categoryItemRoute.delete("/categoryItem/:id", remove)
  *     summary: "Delete one categoryItem"
  *     description: "Deleting categoryItem"
  *     tags: [CategoryItem]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Numeric ID of the categoryItem to retrieve.
+ *         schema:
+ *           type: integer
  *     responses:
  *       200:
  *         description: "Deleting categoryItem"
@@ -156,6 +191,8 @@ categoryItemRoute.delete("/categoryItem/:id", remove)
  *                     type: integer
  *       500:
  *         description: "Internal server error"
- */
+*/
+
+categoryItemRoute.delete("/categoryItem/:id", remove)
 
 export default categoryItemRoute

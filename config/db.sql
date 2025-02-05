@@ -8,7 +8,8 @@ CREATE Table user(
     password VARCHAR(100),
     role ENUM("user","admin","superadmin") DEFAULT ("user")
 );
-
+INSERT INTO user(fullName,phone,password,role)
+VALUES("Alex Roy","9982222222","alex1234","admin");
 
 CREATE TABLE category(
     id INT AUTO_INCREMENT PRIMARY KEY,

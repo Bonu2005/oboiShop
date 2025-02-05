@@ -4,7 +4,6 @@ import upload from "../multer/multer.js";
 
 const categoryRoute = Router()
 
-categoryRoute.get("/category", findAll)
 
 /**
  * @swagger
@@ -40,9 +39,10 @@ categoryRoute.get("/category", findAll)
  *                     type: string
  *       500:
  *         description: "Internal server error"
- */
+*/
 
-categoryRoute.get("/category/:id", findOne)
+categoryRoute.get("/category", findAll)
+
 
 /**
  * @swagger
@@ -51,6 +51,13 @@ categoryRoute.get("/category/:id", findOne)
  *     summary: "Get one from Category"
  *     description: "Retrieve one available category from id"
  *     tags: [Category]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Numeric ID of the category to retrieve.
+ *         schema:
+ *           type: integer
  *     responses:
  *       200:
  *         description: "a category"
@@ -71,9 +78,10 @@ categoryRoute.get("/category/:id", findOne)
  *                     type: string
  *       500:
  *         description: "Internal server error"
- */
+*/
 
-categoryRoute.post("/category", upload.single("image"), create)
+categoryRoute.get("/category/:id", findOne)
+
 
 /**
  * @swagger
@@ -82,6 +90,19 @@ categoryRoute.post("/category", upload.single("image"), create)
  *     summary: "Post category for category"
  *     description: "Post new category"
  *     tags: [Category]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name_uz:
+ *                 type: string
+ *               name_ru:
+ *                 type: string
+ *               image:
+ *                 type: string
  *     responses:
  *       200:
  *         description: "post new category"
@@ -102,9 +123,10 @@ categoryRoute.post("/category", upload.single("image"), create)
  *                     type: string
  *       500:
  *         description: "Internal server error"
- */
+*/
 
-categoryRoute.patch("/category/:id", update)
+categoryRoute.post("/category", upload.single("image"), create)
+
 
 /**
  * @swagger
@@ -113,6 +135,13 @@ categoryRoute.patch("/category/:id", update)
  *     summary: "Update something from one category"
  *     description: "Post new category"
  *     tags: [Category]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Numeric ID of the category to retrieve.
+ *         schema:
+ *           type: integer
  *     responses:
  *       200:
  *         description: "update category"
@@ -133,9 +162,10 @@ categoryRoute.patch("/category/:id", update)
  *                     type: string
  *       500:
  *         description: "Internal server error"
- */
+*/
 
-categoryRoute.delete("/category/:id", remove)
+categoryRoute.patch("/category/:id", update)
+
 
 /**
  * @swagger
@@ -144,6 +174,13 @@ categoryRoute.delete("/category/:id", remove)
  *     summary: "Delete one category"
  *     description: "Deleting category"
  *     tags: [Category]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Numeric ID of the category to retrieve.
+ *         schema:
+ *           type: integer
  *     responses:
  *       200:
  *         description: "Deleting category"
@@ -164,6 +201,8 @@ categoryRoute.delete("/category/:id", remove)
  *                     type: string
  *       500:
  *         description: "Internal server error"
- */
+*/
+
+categoryRoute.delete("/category/:id", remove)
 
 export default categoryRoute

@@ -1,9 +1,11 @@
 import db from "../config/db.js";
 import api from "../models/axios.js";
-// import bcryptjs from "bcryptjs"
+import bcryptjs from "bcryptjs"
 import otp from "otplib"
 import { userValidation } from "../validations/user.validation.js";
 import jwt from "jsonwebtoken";
+
+
 async function sendPhone(req, res) {
     try {
         let { phone } = req.body
@@ -62,6 +64,26 @@ async function registr(req, res) {
         res.status(401).json({ error: error.message })
     }
 }
+async function createAdmin(req,res) {
+    try {
+        let {phone ,fullName,password}=req.body
+        let {value,error}=userValidation({phone ,fullName,password})
+        if(error){
+           return res.status(401).json({error:error.message})
+        }
+        let findAdmin = await db.query("select * from user where phone=?",[phone])
+        if(!findUser.length){
+          return  res.status(201).json({message:"User already registered"})
+        }
+        let hash = await bcryptjs.hash(password,10)
+        let [user] = await db.query("insert into user(phone,fullname,password,role) values(?,?,?,?)",[phone,fullName,hash,"admin"])
+        console.log(user);
+        
+        res.status(201).json({message:"successfully registered"})
+    } catch (error) {
+        res.status(401).json({error:error.message})
+    } 
+}
 async function login(req, res) {
     try {
         let { phone, password } = req.body
@@ -82,4 +104,4 @@ async function login(req, res) {
     }
 
 }
-export { sendPhone, verify, registr, login }
+export { sendPhone, verify, registr, login ,createAdmin}
