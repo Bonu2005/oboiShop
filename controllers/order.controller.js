@@ -3,8 +3,8 @@ import { orderValidation } from "../validations/order.validation.js";
 
 async function getOrder(req, res){
     try {
-        let [orderItems] = await db.query("select * from orders")
-        res.status(200).send(orderItems)
+        let [order] = await db.query("select * from orders inner join orderItem on orders.id = orderItem.order_id inner join product on product.id = orderItem.product_id")
+        res.status(200).send(order)
     } catch (error) {
         console.log(error.message);
     }
@@ -13,7 +13,7 @@ async function getOrder(req, res){
 async function getOneOrder(req, res){
     try {
         let {id} = req.params
-        let [order] = await db.query("select * from orders where id=?", [id])
+        let [order] = await db.query("select * from orders inner join orderItem on orders.id = orderItem.order_id inner join product on product.id = orderItem.product_id where orders.id=?", [id])
         res.status(200).send(order)
     } catch (error) {
         console.log(error.message);
@@ -26,9 +26,9 @@ async function createOrder(req, res){
         res.status(400).send(error.details[0].message)
     }
     try {
-        let {total_count, total_price} = req.body
-        let [createdOrder] = await db.query("insert into orders(total_count, total_price) values(?, ?)",
-        [total_count, total_price]
+        let {user_id, total_price} = req.body
+        let [createdOrder] = await db.query("insert into orders(user_id, total_price) values(?, ?)",
+        [user_id, total_price]
         )
         res.status(201).send({msg: "Created successfully!!!"})
     } catch (error) {

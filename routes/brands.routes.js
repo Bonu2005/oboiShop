@@ -104,7 +104,7 @@ brandsRoute.post("/brands", upload.single("image"), create)
  *         description: "Internal server error"
  */
 
-brandsRoute.patch("/brands/:id", update)
+brandsRoute.patch("/brands/:id",  update)
 
 /**
  * @swagger

@@ -15,8 +15,8 @@ async function sendPhone(req, res) {
     } catch (error) {
         res.status(401).json({ error: error.message })
     }
-
 }
+
 async function sms(phone) {
     try {
         let req = await api.post("/message/sms/send", {
@@ -31,6 +31,7 @@ async function sms(phone) {
     }
 
 }
+
 async function verify(req, res) {
     try {
         let { otp1, phone } = req.params
@@ -42,8 +43,8 @@ async function verify(req, res) {
     } catch (error) {
         res.status(401).json({ error: error.message })
     }
-
 }
+
 async function registr(req, res) {
     try {
         let { phone, fullName, password } = req.body
@@ -64,10 +65,11 @@ async function registr(req, res) {
         res.status(401).json({ error: error.message })
     }
 }
+
 async function createAdmin(req,res) {
     try {
-        let {phone ,fullName,password}=req.body
-        let {value,error}=userValidation({phone ,fullName,password})
+        let {phone ,fullName,password} = req.body
+        let {value,error} = userValidation({phone ,fullName,password})
         if(error){
            return res.status(401).json({error:error.message})
         }
@@ -84,6 +86,7 @@ async function createAdmin(req,res) {
         res.status(401).json({error:error.message})
     } 
 }
+
 async function login(req, res) {
     try {
         let { phone, password } = req.body
@@ -102,6 +105,6 @@ async function login(req, res) {
     } catch (error) {
         res.status(401).json({ error: error.message })
     }
-
 }
-export { sendPhone, verify, registr, login ,createAdmin}
+
+export { sendPhone, verify, registr, login, createAdmin}
