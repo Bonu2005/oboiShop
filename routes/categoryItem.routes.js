@@ -119,7 +119,7 @@ categoryItemRoute.get("/categoryItem/:id", findOne)
  *         description: "Internal server error"
 */
 
-categoryItemRoute.post("/categoryItem", create)
+categoryItemRoute.post("/categoryItem", passedRole(["admin", "superadmin"]), create)
 
 
 /**
@@ -156,7 +156,7 @@ categoryItemRoute.post("/categoryItem", create)
  *         description: "Internal server error"
 */
 
-categoryItemRoute.patch("/categoryItem/:id", update)
+categoryItemRoute.patch("/categoryItem/:id", passedRole(["admin", "superadmin"]), update)
 
 
 /**
@@ -193,6 +193,6 @@ categoryItemRoute.patch("/categoryItem/:id", update)
  *         description: "Internal server error"
 */
 
-categoryItemRoute.delete("/categoryItem/:id", remove)
+categoryItemRoute.delete("/categoryItem/:id", passedRole(["admin"]), remove)
 
 export default categoryItemRoute

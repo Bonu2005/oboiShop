@@ -125,7 +125,7 @@ categoryRoute.get("/category/:id", findOne)
  *         description: "Internal server error"
 */
 
-categoryRoute.post("/category", upload.single("image"), create)
+categoryRoute.post("/category", passedRole(["admin", "superadmin"]), upload.single("image"), create)
 
 
 /**
@@ -164,7 +164,7 @@ categoryRoute.post("/category", upload.single("image"), create)
  *         description: "Internal server error"
 */
 
-categoryRoute.patch("/category/:id", update)
+categoryRoute.patch("/category/:id", passedRole(["admin", "superadmin"]), update)
 
 
 /**
@@ -203,6 +203,6 @@ categoryRoute.patch("/category/:id", update)
  *         description: "Internal server error"
 */
 
-categoryRoute.delete("/category/:id", remove)
+categoryRoute.delete("/category/:id", passedRole(["admin"]), remove)
 
 export default categoryRoute

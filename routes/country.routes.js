@@ -113,7 +113,7 @@ countryRoute.get("/country/:id", findOne)
  *         description: "Internal server error"
  */
 
-countryRoute.post("/country", create)
+countryRoute.post("/country", passedRole(["admin", "superadmin"]), create)
 
 
 
@@ -151,7 +151,7 @@ countryRoute.post("/country", create)
  *         description: "Internal server error"
  */
 
-countryRoute.patch("/country/:id", update)
+countryRoute.patch("/country/:id", passedRole(["admin", "superadmin"]), update)
 
 
 
@@ -189,6 +189,6 @@ countryRoute.patch("/country/:id", update)
  *         description: "Internal server error"
 */
 
-countryRoute.delete("/country/:id", remove)
+countryRoute.delete("/country/:id", passedRole(["admin"]), remove)
 
 export default countryRoute
