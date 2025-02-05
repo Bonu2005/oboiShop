@@ -57,7 +57,7 @@ async function updateProduct(req, res) {
 
 async function deleteProduct(req, res) {
     try {
-        let {id} = req.params
+        let { id } = req.params
         let deletedProduct = await db.query("delete from product where id=?", [id])
         res.status(200).send("Product successfully deleted!!!")
     } catch (error) {
@@ -67,27 +67,27 @@ async function deleteProduct(req, res) {
 
 async function getProductsByCountry(req, res) {
     try {
-       let {id} = req.params
-       let [products] = await db.query("select * from product where country_id=?", [id])
-       res.status(200).send(products)
+        let { id } = req.params
+        let [products] = await db.query("select * from product where country_id=?", [id])
+        res.status(200).send(products)
     } catch (error) {
         console.log(error.message);
     }
 }
 
-// async function getProductsByCategory(req, res){
-//     try {
-//         let {id} = req.params
-//         let [products] = await db.query("select * from product where category_id = ?", [id])
-//         res.status(200).send(products)
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
-
-async function getProductsByBrend(req, res){
+async function getProductsByCategory(req, res) {
     try {
-        let {id} = req.params
+        let { id } = req.params
+        let [products] = await db.query("select * from product where category_id = ?", [id])
+        res.status(200).send(products)
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+async function getProductsByBrend(req, res) {
+    try {
+        let { id } = req.params
         let [products] = await db.query("select * from product where brand_id = ?", [id])
         console.log(products);
         res.status(200).send(products)
@@ -105,4 +105,4 @@ async function getProductsByBrend(req, res) {
     }
 }
 
-export {getAllProducts, getOneProduct, createProduct, updateProduct, getProductsByBrend, getProductsByCountry, deleteProduct}
+export { getAllProducts, getOneProduct, createProduct, updateProduct, getProductsByBrend, getProductsByCountry, deleteProduct, getProductsByCategory }

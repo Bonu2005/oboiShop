@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createProduct, deleteProduct, getAllProducts, getOneProduct, getProductsByBrend, getProductsByCountry, updateProduct } from "../controllers/product.controller.js";
+import { createProduct, deleteProduct, getAllProducts, getOneProduct, getProductsByBrend, getProductsByCategory, getProductsByCountry, updateProduct } from "../controllers/product.controller.js";
 import passedRole from "../middleware/rolePolice.js";
 import selfPolice from "../middleware/selfPolice.js";
 import middleWare from "../middleware/token.middleware.js";
@@ -63,7 +63,176 @@ let productRouter = Router()
 
 productRouter.get("/products", getAllProducts)
 
+
+/**
+ * @swagger
+ * /productByCountry/{id}:
+ *   get:
+ *     summary: "Get one from products"
+ *     description: "Retrieve products by country from id"
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Numeric ID of the products to retrieve.
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: "a products"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   name_uz:
+ *                     type: string
+ *                   name_ru:
+ *                     type: string
+ *                   brand_id:
+ *                     type: integer
+ *                   country_id:
+ *                     type: integer
+ *                   price:
+ *                     type: integer
+ *                   old_price:
+ *                     type: integer
+ *                   available:
+ *                     type: boolean
+ *                   decription_uz:
+ *                     type: string
+ *                   decription_ru:
+ *                     type: string
+ *                   washable:
+ *                     type: boolean
+ *                   size:
+ *                     type: string
+ *                   image:
+ *                     type: string
+ *       500:
+ *         description: "Internal server error"
+*/
+
 productRouter.get("/productByCountry/:id", getProductsByCountry)
+
+
+/**
+ * @swagger
+ * /productByCategory/{id}:
+ *   get:
+ *     summary: "Get one from products"
+ *     description: "Retrieve products by country from id"
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Numeric ID of the products to retrieve.
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: "a products"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   name_uz:
+ *                     type: string
+ *                   name_ru:
+ *                     type: string
+ *                   brand_id:
+ *                     type: integer
+ *                   country_id:
+ *                     type: integer
+ *                   price:
+ *                     type: integer
+ *                   old_price:
+ *                     type: integer
+ *                   available:
+ *                     type: boolean
+ *                   decription_uz:
+ *                     type: string
+ *                   decription_ru:
+ *                     type: string
+ *                   washable:
+ *                     type: boolean
+ *                   size:
+ *                     type: string
+ *                   image:
+ *                     type: string
+ *       500:
+ *         description: "Internal server error"
+*/
+
+productRouter.get("/productByCategory/:id", getProductsByCategory)
+
+
+/**
+ * @swagger
+ * /productByBrand/{id}:
+ *   get:
+ *     summary: "Get one from products"
+ *     description: "Retrieve products by country from id"
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Numeric ID of the products to retrieve.
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: "a products"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   name_uz:
+ *                     type: string
+ *                   name_ru:
+ *                     type: string
+ *                   brand_id:
+ *                     type: integer
+ *                   country_id:
+ *                     type: integer
+ *                   price:
+ *                     type: integer
+ *                   old_price:
+ *                     type: integer
+ *                   available:
+ *                     type: boolean
+ *                   decription_uz:
+ *                     type: string
+ *                   decription_ru:
+ *                     type: string
+ *                   washable:
+ *                     type: boolean
+ *                   size:
+ *                     type: string
+ *                   image:
+ *                     type: string
+ *       500:
+ *         description: "Internal server error"
+*/
+
+
 productRouter.get("/productByBrand/:id", getProductsByBrend)
 
 
@@ -202,7 +371,7 @@ productRouter.get("/products/:id", getOneProduct)
  */
 
 
-productRouter.post("/products", upload.single("image"), middleWare, passedRole(["admin", "superadmin"]), createProduct)
+productRouter.post("/products", middleWare, passedRole(["admin", "superadmin"]), upload.single("image"), createProduct)
 
 
 /**
