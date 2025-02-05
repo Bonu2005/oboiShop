@@ -371,7 +371,7 @@ productRouter.get("/products/:id", getOneProduct)
  */
 
 
-productRouter.post("/products", middleWare, passedRole(["admin", "superadmin"]), upload.single("image"), createProduct)
+productRouter.post("/products", upload.single("image"), createProduct)
 
 
 /**
