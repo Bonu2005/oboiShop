@@ -12,7 +12,8 @@ export function productValidation(data){
         decription_uz: Joi.string().min(3).required(),
         decription_ru: Joi.string().min(3).required(),
         washable: Joi.boolean().required(),
-        size: Joi.string().required()
+        size: Joi.string().required(),
+        image: Joi.string()
     })
     return productSchema.validate(data, {abortEarly: true})
 }

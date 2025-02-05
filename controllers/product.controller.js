@@ -21,15 +21,15 @@ async function getOneProduct(req, res){
 }
 
 async function createProduct(req, res){
-    let {error, value} = productValidation(req.body)
-    if(error){
-       return res.status(400).send({msg: error.details[0].message})
-    }
-
     try {
-        let {name_uz, name_ru, brand_id, country_id, price,  old_price, available, decription_uz, decription_ru, washable, size} = req.body
-        let createdProduct = await db.query("insert into product(name_uz, name_ru, brand_id, country_id, price,  old_price, available, decription_uz, decription_ru, washable, size) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
-        [name_uz, name_ru, brand_id, country_id, price,  old_price, available, decription_uz, decription_ru, washable, size])
+        let {data}=req.body
+        let {error, value} = productValidation(req.body)
+        if(error){
+            return res.status(400).send({msg: error.details[0].message})
+        }
+        let {name_uz, name_ru, brand_id, country_id, price,  old_price, available, decription_uz, decription_ru, washable, size, image} = req.body
+        let createdProduct = await db.query("insert into product(name_uz, name_ru, brand_id, country_id, price,  old_price, available, decription_uz, decription_ru, washable, size, image) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+        [name_uz, name_ru, brand_id, country_id, price,  old_price, available, decription_uz, decription_ru, washable, size, image])
         res.status(200).send("Product successfully created!!!")
     } catch (error) {
         console.log(error.message);
