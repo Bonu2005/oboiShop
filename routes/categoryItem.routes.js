@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { create, findAll, findOne, remove, update } from "../controllers/categoryItem.controller.js";
+import passedRole from "../middleware/rolePolice.js";
 
 const categoryItemRoute = Router()
 

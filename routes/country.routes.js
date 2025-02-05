@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { create, findAll, findOne, remove, update } from "../controllers/country.controller.js";
+import passedRole from "../middleware/rolePolice.js";
 
 const countryRoute = Router()
 /**

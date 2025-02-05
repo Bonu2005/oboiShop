@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { create, findAll, findOne, remove, update } from "../controllers/category.controller.js";
 import upload from "../multer/multer.js";
+import passedRole from "../middleware/rolePolice.js";
 
 const categoryRoute = Router()
 
@@ -87,43 +88,42 @@ categoryRoute.get("/category/:id", findOne)
  * @swagger
  * /category:
  *   post:
- *     summary: "Post category for category"
+ *     summary: "Post category for Category"
  *     description: "Post new category"
  *     tags: [Category]
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
+ *               image:
+ *                 type: string
+ *                 format: binary
  *               name_uz:
  *                 type: string
  *               name_ru:
  *                 type: string
- *               image:
- *                 type: string
  *     responses:
  *       200:
- *         description: "post new category"
+ *         description: "New category posted successfully"
  *         content:
  *           application/json:
  *             schema:
  *               type: object
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                   name_uz:
- *                     type: string
- *                   name_ru:
- *                     type: string
- *                   image:
- *                     type: string
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 name_uz:
+ *                   type: string
+ *                 name_ru:
+ *                   type: string
+ *                 image:
+ *                   type: string  # Bu yerda server tomonidan yuborilgan rasm URLi bo'ladi
  *       500:
  *         description: "Internal server error"
-*/
+ */
 
 categoryRoute.post("/category", passedRole(["admin", "superadmin"]), upload.single("image"), create)
 

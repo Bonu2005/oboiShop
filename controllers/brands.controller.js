@@ -27,21 +27,28 @@ async function findOne(req, res) {
 };
 async function create(req, res) {
     try {
-        let { error, value } = brandsSchema.validate(req.body)
-        if (error) {
-            return res.send({ validateError: error.details[0].message });
-        }
-        let { name_uz, name_ru } = req.body
-        if (!req.file.filename) {
-            return res.status(400).send({ message: "Rasm yuklang!" });
+        if (!req.file) {
+            return res.status(400).json({ message: 'No file uploaded' });
         }
         let { filename } = req.file
-        let [newItem] = await db.query("INSERT INTO brands (name_uz, name_ru, image) VALUES (?, ?, ?)", [name_uz, name_ru, filename])
-        if (newItem.affectedRows == 0) {
-            return res.status(400).send({ message: "not created ❌" })
+        let data = req.body
+        let { value, error } = brandsSchema.validate(data)
+        if (error) {
+            res.status(400).json({ message: error.message })
+            await fs.unlink(`./uploads/${filename}`)
+            return
         }
-        let [item] = await db.query("SELECT * FROM brands WHERE id = ?", [newItem.insertId])
-        res.json(item[0])
+        // let {id}=req.malumot
+        let newOne = {
+            ...data,
+            image: filename,
+            // owner:id
+        }
+        console.log(newOne.image);
+        let createdProduct = await db.query("insert into brands(name_uz, name_ru, image) values(?, ?, ?)",
+            [newOne.name_uz, newOne.name_ru, newOne.image])
+        console.log(createdProduct);
+        res.status(200).send("Product successfully created!!!")
     } catch (error) {
         console.log(error);
     }

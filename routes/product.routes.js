@@ -103,13 +103,13 @@ productRouter.get("/products", getAllProducts)
  *                   old_price:
  *                     type: integer
  *                   available:
- *                     type: boolean
+ *                     type: string
  *                   decription_uz:
  *                     type: string
  *                   decription_ru:
  *                     type: string
  *                   washable:
- *                     type: boolean
+ *                     type: string
  *                   size:
  *                     type: string
  *                   image:
@@ -160,13 +160,13 @@ productRouter.get("/productByCountry/:id", getProductsByCountry)
  *                   old_price:
  *                     type: integer
  *                   available:
- *                     type: boolean
+ *                     type: string
  *                   decription_uz:
  *                     type: string
  *                   decription_ru:
  *                     type: string
  *                   washable:
- *                     type: boolean
+ *                     type: string
  *                   size:
  *                     type: string
  *                   image:
@@ -217,13 +217,13 @@ productRouter.get("/productByCategory/:id", getProductsByCategory)
  *                   old_price:
  *                     type: integer
  *                   available:
- *                     type: boolean
+ *                     type: string
  *                   decription_uz:
  *                     type: string
  *                   decription_ru:
  *                     type: string
  *                   washable:
- *                     type: boolean
+ *                     type: string
  *                   size:
  *                     type: string
  *                   image:
@@ -275,13 +275,13 @@ productRouter.get("/productByBrand/:id", getProductsByBrend)
  *                   old_price:
  *                     type: integer
  *                   available:
- *                     type: boolean
+ *                     type: string
  *                   decription_uz:
  *                     type: string
  *                   decription_ru:
  *                     type: string
  *                   washable:
- *                     type: boolean
+ *                     type: string
  *                   size:
  *                     type: string
  *                   image:
@@ -307,7 +307,7 @@ productRouter.get("/products/:id", getOneProduct)
  *           schema:
  *             type: object
  *             properties:
- *               upfile:
+ *               image:
  *                 type: string
  *                 format: binary
  *               name_uz:
@@ -323,13 +323,13 @@ productRouter.get("/products/:id", getOneProduct)
  *               old_price:
  *                 type: integer
  *               available:
- *                 type: boolean
+ *                 type: string
  *               decription_uz:
  *                 type: string
  *               decription_ru:
  *                 type: string
  *               washable:
- *                 type: boolean
+ *                 type: string
  *               size:
  *                 type: string
  *     responses:
@@ -355,13 +355,13 @@ productRouter.get("/products/:id", getOneProduct)
  *                 old_price:
  *                   type: integer
  *                 available:
- *                   type: boolean
+ *                   type: string
  *                 decription_uz:
  *                   type: string
  *                 decription_ru:
  *                   type: string
  *                 washable:
- *                   type: boolean
+ *                   type: string
  *                 size:
  *                   type: string
  *                 image:
@@ -413,13 +413,13 @@ productRouter.post("/products", upload.single("image"), createProduct)
  *                   old_price:
  *                     type: integer
  *                   available:
- *                     type: boolean
+ *                     type: string
  *                   decription_uz:
  *                     type: string
  *                   decription_ru:
  *                     type: string
  *                   washable:
- *                     type: boolean
+ *                     type: string
  *                   size:
  *                     type: string
  *                   image:
@@ -470,13 +470,13 @@ productRouter.patch("/products/:id", middleWare, selfPolice(["admin", "superadmi
  *                   old_price:
  *                     type: integer
  *                   available:
- *                     type: boolean
+ *                     type: string
  *                   decription_uz:
  *                     type: string
  *                   decription_ru:
  *                     type: string
  *                   washable:
- *                     type: boolean
+ *                     type: string
  *                   size:
  *                     type: string
  *                   image:

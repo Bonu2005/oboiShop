@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { create, findAll, findOne, remove, update } from "../controllers/brands.controller.js";
 import upload from "../multer/multer.js";
+import passedRole from "../middleware/rolePolice.js";
 
 const brandsRoute = Router()
 
@@ -89,39 +90,38 @@ brandsRoute.get("/brands/:id", findOne)
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
+ *               image:
+ *                 type: string
+ *                 format: binary
  *               name_uz:
  *                 type: string
  *               name_ru:
  *                 type: string
- *               image:
- *                 type: string
  *     responses:
  *       200:
- *         description: "post new brand"
+ *         description: "New brand posted successfully"
  *         content:
  *           application/json:
  *             schema:
  *               type: object
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                   name_uz:
- *                     type: string
- *                   name_ru:
- *                     type: string
- *                   image:
- *                     type: string
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 name_uz:
+ *                   type: string
+ *                 name_ru:
+ *                   type: string
+ *                 image:
+ *                   type: string  # Bu yerda server tomonidan yuborilgan rasm URLi bo'ladi
  *       500:
  *         description: "Internal server error"
  */
 
-brandsRoute.post("/brands", passedRole(["admin", "superadmin"]),upload.single("image"), create)
+brandsRoute.post("/brands", passedRole(["admin", "superadmin"]), upload.single("image"), create)
 
 /**
  * @swagger
