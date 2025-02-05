@@ -52,7 +52,8 @@ CREATE Table product(
     decription_uz VARCHAR(255),
     decription_ru VARCHAR(255),
     washable BOOLEAN,
-    size VARCHAR(55)
+    size VARCHAR(55),
+    image VARCHAR(255)
 );
 
 CREATE Table orders(
