@@ -1,5 +1,5 @@
 import axios from "axios";
-const api = await axios.create(
+const api = axios.create(
     {
     baseURL:"https://notify.eskiz.uz/api",
     headers:{

@@ -6,8 +6,9 @@ CREATE Table user(
     fullName VARCHAR(100),
     phone VARCHAR(100),
     password VARCHAR(100),
-    role ENUM("user","admin","superadmin") DEFAULT "user"
+    role ENUM("user","admin","superadmin") DEFAULT ("user")
 );
+
 
 CREATE TABLE category(
     id INT AUTO_INCREMENT PRIMARY KEY,
