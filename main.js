@@ -1,7 +1,7 @@
 import express from "express"
 import {config} from "dotenv"
 
-import mainRoute from "./routes/index.js"
+ import mainRoute from "./routes/index.js"
 
 config()
 
@@ -10,7 +10,9 @@ app.use(express.json())
 
 
 app.use("/", mainRoute)
+ 
 
-app.listen(process.env.PORT,()=>{
+
+app.listen(process.env.PORT, () => {
     console.log(`server is run on PORT ${process.env.PORT}`);
 })
