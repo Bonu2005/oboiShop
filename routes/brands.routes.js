@@ -4,8 +4,6 @@ import upload from "../multer/multer.js";
 
 const brandsRoute = Router()
 
-brandsRoute.get("/brands", findAll)
-
 /**
  * @swagger
  * tags:
@@ -42,18 +40,68 @@ brandsRoute.get("/brands", findAll)
  *         description: "Internal server error"
  */
 
-brandsRoute.get("/brands/:id", findOne)
+brandsRoute.get("/brands", findAll)
 
-/**
+ /**
  * @swagger
  * /brands/{id}:
  *   get:
- *     summary: "Get one from brands"
- *     description: "Retrieve one available brand from id"
+ *     summary: "Get all brands"
+ *     description: "Retrieve a list of all available brands"
  *     tags: [Brands]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Numeric ID of the brand to retrieve.
+ *         schema:
+ *           type: integer
  *     responses:
  *       200:
- *         description: "a brand"
+ *         description: A single brand.
+ *         content:
+ *           application/json:
+ *              schema:
+ *               type: object
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   name_uz:
+ *                     type: string
+ *                   name_ru:
+ *                     type: string
+ *                   image:
+ *                     type: string
+*/
+
+brandsRoute.get("/brands/:id", findOne)
+
+
+/**
+ * @swagger
+ * /brands:
+ *   post:
+ *     summary: "Post brand for brands"
+ *     description: "Post new brand"
+ *     tags: [Brands]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name_uz:
+ *                 type: string
+ *               name_ru:
+ *                 type: string
+ *               image:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: "post new brand"
  *         content:
  *           application/json:
  *             schema:
@@ -77,42 +125,18 @@ brandsRoute.post("/brands", upload.single("image"), create)
 
 /**
  * @swagger
- * /brands:
- *   post:
- *     summary: "Post brand for brands"
- *     description: "Post new brand"
- *     tags: [Brands]
- *     responses:
- *       200:
- *         description: "post new brand"
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                   name_uz:
- *                     type: string
- *                   name_ru:
- *                     type: string
- *                   image:
- *                     type: string
- *       500:
- *         description: "Internal server error"
- */
-
-brandsRoute.patch("/brands/:id", update)
-
-/**
- * @swagger
  * /brands/{id}:
  *   patch:
  *     summary: "Update something from one brand"
  *     description: "Post new brand"
  *     tags: [Brands]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Numeric ID of the brand to retrieve.
+ *         schema:
+ *           type: integer
  *     responses:
  *       200:
  *         description: "update brand"
@@ -133,9 +157,10 @@ brandsRoute.patch("/brands/:id", update)
  *                     type: string
  *       500:
  *         description: "Internal server error"
- */
+*/
 
-brandsRoute.delete("/brands/:id", remove)
+brandsRoute.patch("/brands/:id", update)
+
 
 /**
  * @swagger
@@ -144,6 +169,13 @@ brandsRoute.delete("/brands/:id", remove)
  *     summary: "Delete one brand"
  *     description: "Deleting brand"
  *     tags: [Brands]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Numeric ID of the brand to retrieve.
+ *         schema:
+ *           type: integer
  *     responses:
  *       200:
  *         description: "Deleting brand"
@@ -164,6 +196,8 @@ brandsRoute.delete("/brands/:id", remove)
  *                     type: string
  *       500:
  *         description: "Internal server error"
- */
+*/
+
+brandsRoute.delete("/brands/:id", remove)
 
 export default brandsRoute
