@@ -32,6 +32,8 @@ async function create(req, res) {
             return res.send({ validateError: error.details[0].message });
         }
         let { name_uz, name_ru } = req.body
+        
+        
         let [newItem] = await db.query("INSERT INTO country (name_uz, name_ru) VALUES (?, ?)", [name_uz, name_ru])
         if (newItem.affectedRows == 0) {
             return res.status(400).send({ message: "not created ❌" })
