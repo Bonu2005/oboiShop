@@ -8,10 +8,10 @@ export function productValidation(data){
         country_id: Joi.number().required().positive(),
         price: Joi.number().positive().required(),
         old_price: Joi.number().positive().required(),
-        available: Joi.boolean(),
+        available: Joi.string().required(),
         decription_uz: Joi.string().min(3).required(),
         decription_ru: Joi.string().min(3).required(),
-        washable: Joi.boolean(),
+        washable: Joi.string().required(),
         size: Joi.string().required()
     })
     return productSchema.validate(data, {abortEarly: true})

@@ -49,10 +49,10 @@ CREATE Table product(
     Foreign Key (country_id) REFERENCES country(id),
     price INT NOT NULL,
     old_price INT NOT NULL,
-    available BOOLEAN,
+    available VARCHAR(255),
     decription_uz VARCHAR(255),
     decription_ru VARCHAR(255),
-    washable BOOLEAN,
+    washable VARCHAR(255),
     size VARCHAR(55),
     image VARCHAR(255)
 );
