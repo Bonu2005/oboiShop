@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { create, findAll, findOne, remove, update } from "../controllers/category.controller.js";
+import { create, findAll, findOne, remove, update,pegination } from "../controllers/category.controller.js";
 import upload from "../multer/multer.js";
+
 
 const categoryRoute = Router()
 
@@ -204,5 +205,5 @@ categoryRoute.patch("/category/:id", update)
 */
 
 categoryRoute.delete("/category/:id", remove)
-
+categoryRoute.get("/categoryPagination?:page?:take", pegination)
 export default categoryRoute

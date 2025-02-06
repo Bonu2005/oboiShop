@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { create, findAll, findOne, remove, update } from "../controllers/categoryItem.controller.js";
+import { create, findAll, findOne, remove, update,pegination } from "../controllers/categoryItem.controller.js";
 
 const categoryItemRoute = Router()
 
@@ -194,5 +194,5 @@ categoryItemRoute.patch("/categoryItem/:id", update)
 */
 
 categoryItemRoute.delete("/categoryItem/:id", remove)
-
+categoryItemRoute.get("/categoryItemPagination?:page?:take", pegination)
 export default categoryItemRoute

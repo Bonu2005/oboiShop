@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { create, findAll, findOne, remove, update } from "../controllers/brands.controller.js";
+import { create, findAll, findOne, pegination, remove, update } from "../controllers/brands.controller.js";
 import upload from "../multer/multer.js";
 
 const brandsRoute = Router()
@@ -199,5 +199,5 @@ brandsRoute.patch("/brands/:id", update)
 */
 
 brandsRoute.delete("/brands/:id", remove)
-
+brandsRoute.get("/brandsPagination?:page?:take", pegination)
 export default brandsRoute

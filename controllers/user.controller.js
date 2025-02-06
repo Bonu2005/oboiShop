@@ -106,5 +106,27 @@ async function login(req, res) {
         res.status(401).json({ error: error.message })
     }
 }
-
-export { sendPhone, verify, registr, login, createAdmin}
+async function pegination(req, res) {
+    try {
+        if(!take){
+            let pageNumber = parseInt(page, 10) || 0;  
+            let takeNumber =10
+    
+        let offset = (pageNumber-1) * takeNumber;
+        let [get] = await db.query("select * from user limit ? OFFSET ? ",[takeNumber,offset])
+        res.json({data : get })
+        return
+        }
+        let {page,take}=req.query
+        let pageNumber = parseInt(page, 10) || 0;  
+        let takeNumber = parseInt(take, 10) || 10; 
+    
+        let offset = pageNumber * takeNumber;
+        let [get] = await db.query("select * from user limit ? OFFSET ? ",[takeNumber,offset])
+        res.json({data : get })
+        
+    } catch (error) {
+        res.status(400).json({error:error.message})
+    }
+};
+export { sendPhone, verify, registr, login, createAdmin,pegination}
