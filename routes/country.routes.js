@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { create, findAll, findOne, remove, update,pegination } from "../controllers/country.controller.js";
 
+import passedRole from "../middleware/rolePolice.js";
+
 const countryRoute = Router()
 /**
  * @swagger
@@ -93,6 +95,8 @@ countryRoute.get("/country/:id", findOne)
  *                 type: string
  *               name_ru:
  *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "post new country"
@@ -113,7 +117,7 @@ countryRoute.get("/country/:id", findOne)
  *         description: "Internal server error"
  */
 
-countryRoute.post("/country", create)
+countryRoute.post("/country", passedRole(["admin", "superadmin"]), create)
 
 
 
@@ -131,6 +135,19 @@ countryRoute.post("/country", create)
  *         description: Numeric ID of the brand to retrieve.
  *         schema:
  *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name_uz:
+ *                 type: string
+ *               name_ru:
+ *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "update country"
@@ -151,7 +168,7 @@ countryRoute.post("/country", create)
  *         description: "Internal server error"
  */
 
-countryRoute.patch("/country/:id", update)
+countryRoute.patch("/country/:id", passedRole(["admin", "superadmin"]), update)
 
 
 
@@ -169,6 +186,8 @@ countryRoute.patch("/country/:id", update)
  *         description: Numeric ID of the brand to retrieve.
  *         schema:
  *           type: integer
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "Deleting country"
@@ -189,6 +208,8 @@ countryRoute.patch("/country/:id", update)
  *         description: "Internal server error"
 */
 
-countryRoute.delete("/country/:id", remove)
+
 countryRoute.get("/countryPagination?:page?:take", pegination)
+countryRoute.delete("/country/:id", passedRole(["admin"]), remove)
+
 export default countryRoute

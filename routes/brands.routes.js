@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { create, findAll, findOne, pegination, remove, update } from "../controllers/brands.controller.js";
 import upload from "../multer/multer.js";
+import passedRole from "../middleware/rolePolice.js";
 
 const brandsRoute = Router()
 
@@ -42,38 +43,38 @@ const brandsRoute = Router()
 
 brandsRoute.get("/brands", findAll)
 
- /**
- * @swagger
- * /brands/{id}:
- *   get:
- *     summary: "Get all brands"
- *     description: "Retrieve a list of all available brands"
- *     tags: [Brands]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: Numeric ID of the brand to retrieve.
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: A single brand.
- *         content:
- *           application/json:
- *              schema:
- *               type: object
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                   name_uz:
- *                     type: string
- *                   name_ru:
- *                     type: string
- *                   image:
- *                     type: string
+/**
+* @swagger
+* /brands/{id}:
+*   get:
+*     summary: "Get all brands"
+*     description: "Retrieve a list of all available brands"
+*     tags: [Brands]
+*     parameters:
+*       - in: path
+*         name: id
+*         required: true
+*         description: Numeric ID of the brand to retrieve.
+*         schema:
+*           type: integer
+*     responses:
+*       200:
+*         description: A single brand.
+*         content:
+*           application/json:
+*              schema:
+*               type: object
+*               items:
+*                 type: object
+*                 properties:
+*                   id:
+*                     type: integer
+*                   name_uz:
+*                     type: string
+*                   name_ru:
+*                     type: string
+*                   image:
+*                     type: string
 */
 
 brandsRoute.get("/brands/:id", findOne)
@@ -89,39 +90,40 @@ brandsRoute.get("/brands/:id", findOne)
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
+ *               image:
+ *                 type: string
+ *                 format: binary
  *               name_uz:
  *                 type: string
  *               name_ru:
  *                 type: string
- *               image:
- *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
- *         description: "post new brand"
+ *         description: "New brand posted successfully"
  *         content:
  *           application/json:
  *             schema:
  *               type: object
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                   name_uz:
- *                     type: string
- *                   name_ru:
- *                     type: string
- *                   image:
- *                     type: string
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 name_uz:
+ *                   type: string
+ *                 name_ru:
+ *                   type: string
+ *                 image:
+ *                   type: string  # Bu yerda server tomonidan yuborilgan rasm URLi bo'ladi
  *       500:
  *         description: "Internal server error"
  */
 
-brandsRoute.post("/brands", upload.single("image"), create)
+brandsRoute.post("/brands", passedRole(["admin", "superadmin"]), upload.single("image"), create)
 
 /**
  * @swagger
@@ -137,6 +139,22 @@ brandsRoute.post("/brands", upload.single("image"), create)
  *         description: Numeric ID of the brand to retrieve.
  *         schema:
  *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *               name_uz:
+ *                 type: string
+ *               name_ru:
+ *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "update brand"
@@ -159,7 +177,7 @@ brandsRoute.post("/brands", upload.single("image"), create)
  *         description: "Internal server error"
 */
 
-brandsRoute.patch("/brands/:id", update)
+brandsRoute.patch("/brands/:id", passedRole(["admin", "superadmin"]), update)
 
 
 /**
@@ -176,6 +194,8 @@ brandsRoute.patch("/brands/:id", update)
  *         description: Numeric ID of the brand to retrieve.
  *         schema:
  *           type: integer
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "Deleting brand"
@@ -198,6 +218,7 @@ brandsRoute.patch("/brands/:id", update)
  *         description: "Internal server error"
 */
 
-brandsRoute.delete("/brands/:id", remove)
 brandsRoute.get("/brandsPagination?:page?:take", pegination)
+brandsRoute.delete("/brands/:id", passedRole(["admin"]), remove)
+
 export default brandsRoute

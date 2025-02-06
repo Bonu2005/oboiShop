@@ -99,6 +99,8 @@ orderItemRouter.get("/orderItem/:id", middleWare, getOneOrderItem)
  *                 type: integer
  *               order_id:
  *                 type: integer
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "post new orderItem"
@@ -136,6 +138,19 @@ orderItemRouter.post("/orderItem", passedRole(["admin", "superadmin"]), createOr
  *         description: Numeric ID of the orderItem to retrieve.
  *         schema:
  *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               product_id:
+ *                 type: string
+ *               order_id:
+ *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "update orderItem"
@@ -173,6 +188,8 @@ orderItemRouter.patch("/orderItem/:id", selfPolice(["admin"]), updateOrderItem)
  *         description: Numeric ID of the orderItem to retrieve.
  *         schema:
  *           type: integer
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "Deleting orderItem"

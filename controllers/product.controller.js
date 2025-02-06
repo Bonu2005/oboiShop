@@ -10,7 +10,6 @@ async function getAllProducts(req, res) {
     }
 }
 
-
 async function getProductsFilterByPrice(req, res){
     try {
         let {from, to} = req.query
@@ -176,3 +175,4 @@ async function pegination(req, res) {
 
 
 export { getAllProducts, getOneProduct, createProduct, updateProduct, getProductsByBrend, getProductsByCountry, deleteProduct, getProductsByCategory, getProductIsMaxPrice, getProductIsMinPrice, getProductsFilterByPrice,pegination }
+

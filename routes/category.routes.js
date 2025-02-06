@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { create, findAll, findOne, remove, update,pegination } from "../controllers/category.controller.js";
 import upload from "../multer/multer.js";
+import passedRole from "../middleware/rolePolice.js";
 
 
 const categoryRoute = Router()
@@ -11,6 +12,22 @@ const categoryRoute = Router()
  * tags:
  *   name: Category
  *   description: Category management endpoints
+ */
+
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
+/**
+ * @swagger
+ * security:
+ *   - BearerAuth: []
  */
 
 /**
@@ -88,45 +105,46 @@ categoryRoute.get("/category/:id", findOne)
  * @swagger
  * /category:
  *   post:
- *     summary: "Post category for category"
+ *     summary: "Post category for Category"
  *     description: "Post new category"
  *     tags: [Category]
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
+ *               image:
+ *                 type: string
+ *                 format: binary
  *               name_uz:
  *                 type: string
  *               name_ru:
  *                 type: string
- *               image:
- *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
- *         description: "post new category"
+ *         description: "New category posted successfully"
  *         content:
  *           application/json:
  *             schema:
  *               type: object
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                   name_uz:
- *                     type: string
- *                   name_ru:
- *                     type: string
- *                   image:
- *                     type: string
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 name_uz:
+ *                   type: string
+ *                 name_ru:
+ *                   type: string
+ *                 image:
+ *                   type: string  # Bu yerda server tomonidan yuborilgan rasm URLi bo'ladi
  *       500:
  *         description: "Internal server error"
-*/
+ */
 
-categoryRoute.post("/category", upload.single("image"), create)
+categoryRoute.post("/category", passedRole(["admin", "superadmin"]), upload.single("image"), create)
 
 
 /**
@@ -143,6 +161,22 @@ categoryRoute.post("/category", upload.single("image"), create)
  *         description: Numeric ID of the category to retrieve.
  *         schema:
  *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *               name_uz:
+ *                 type: string
+ *               name_ru:
+ *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "update category"
@@ -165,7 +199,7 @@ categoryRoute.post("/category", upload.single("image"), create)
  *         description: "Internal server error"
 */
 
-categoryRoute.patch("/category/:id", update)
+categoryRoute.patch("/category/:id", passedRole(["admin", "superadmin"]), update)
 
 
 /**
@@ -182,6 +216,8 @@ categoryRoute.patch("/category/:id", update)
  *         description: Numeric ID of the category to retrieve.
  *         schema:
  *           type: integer
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "Deleting category"
@@ -204,6 +240,8 @@ categoryRoute.patch("/category/:id", update)
  *         description: "Internal server error"
 */
 
-categoryRoute.delete("/category/:id", remove)
+
 categoryRoute.get("/categoryPagination?:page?:take", pegination)
+categoryRoute.delete("/category/:id", passedRole(["admin"]), remove)
+
 export default categoryRoute

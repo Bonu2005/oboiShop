@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { create, findAll, findOne, remove, update,pegination } from "../controllers/categoryItem.controller.js";
 
+import passedRole from "../middleware/rolePolice.js";
+
 const categoryItemRoute = Router()
 
 
@@ -99,6 +101,8 @@ categoryItemRoute.get("/categoryItem/:id", findOne)
  *                 type: integer
  *               product_id:
  *                 type: integer
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "post new categoryItem"
@@ -119,7 +123,7 @@ categoryItemRoute.get("/categoryItem/:id", findOne)
  *         description: "Internal server error"
 */
 
-categoryItemRoute.post("/categoryItem", create)
+categoryItemRoute.post("/categoryItem", passedRole(["admin", "superadmin"]), create)
 
 
 /**
@@ -136,6 +140,19 @@ categoryItemRoute.post("/categoryItem", create)
  *         description: Numeric ID of the categoryItem to retrieve.
  *         schema:
  *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               category_id:
+ *                 type: string
+ *               product_id:
+ *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "update categoryItem"
@@ -156,7 +173,7 @@ categoryItemRoute.post("/categoryItem", create)
  *         description: "Internal server error"
 */
 
-categoryItemRoute.patch("/categoryItem/:id", update)
+categoryItemRoute.patch("/categoryItem/:id", passedRole(["admin", "superadmin"]), update)
 
 
 /**
@@ -173,6 +190,8 @@ categoryItemRoute.patch("/categoryItem/:id", update)
  *         description: Numeric ID of the categoryItem to retrieve.
  *         schema:
  *           type: integer
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "Deleting categoryItem"
@@ -193,6 +212,7 @@ categoryItemRoute.patch("/categoryItem/:id", update)
  *         description: "Internal server error"
 */
 
-categoryItemRoute.delete("/categoryItem/:id", remove)
 categoryItemRoute.get("/categoryItemPagination?:page?:take", pegination)
+categoryItemRoute.delete("/categoryItem/:id", passedRole(["admin"]), remove)
+
 export default categoryItemRoute

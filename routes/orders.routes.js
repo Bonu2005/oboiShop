@@ -99,6 +99,8 @@ ordersRouter.get("/orders/:id", middleWare, getOneOrder)
  *                 type: string
  *               image:
  *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "post new orders"
@@ -136,6 +138,19 @@ ordersRouter.post("/orders", middleWare, createOrder)
  *         description: Numeric ID of the orders to retrieve.
  *         schema:
  *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               user_id:
+ *                 type: string
+ *               total_price:
+ *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "update orders"
@@ -174,6 +189,8 @@ ordersRouter.patch("/orders/:id", middleWare,  updateOrder)
  *         description: Numeric ID of the orders to retrieve.
  *         schema:
  *           type: integer
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "Deleting orders"

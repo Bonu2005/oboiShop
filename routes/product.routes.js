@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createProduct, deleteProduct, getAllProducts, getOneProduct, getProductsByBrend, getProductsByCategory, getProductsByCountry, updateProduct,pegination } from "../controllers/product.controller.js";
+import {pegination, createProduct, deleteProduct, getAllProducts, getOneProduct, getProductIsMaxPrice, getProductIsMinPrice, getProductsByBrend, getProductsByCategory, getProductsByCountry, getProductsFilterByPrice, updateProduct } from "../controllers/product.controller.js";
 import passedRole from "../middleware/rolePolice.js";
 import selfPolice from "../middleware/selfPolice.js";
 import middleWare from "../middleware/token.middleware.js";
@@ -67,6 +67,101 @@ productRouter.get("/products", getAllProducts)
 
 /**
  * @swagger
+ * /isMaxPrice:
+ *   get:
+ *     summary: "Get product with the highest price"
+ *     description: "Retrieve the product that has the maximum price"
+ *     tags: [Products]
+ *     responses:
+ *       200:
+ *         description: "A product with the maximum price"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 name:
+ *                   type: string
+ *                 price:
+ *                   type: integer
+ *       500:
+ *         description: "Internal server error"
+ */
+productRouter.get("/isMaxPrice", getProductIsMaxPrice)
+
+
+/**
+ * @swagger
+ * /isMinPrice:
+ *   get:
+ *     summary: "Get product with the lowest price"
+ *     description: "Retrieve the product that has the minimum price"
+ *     tags: [Products]
+ *     responses:
+ *       200:
+ *         description: "A product with the minimum price"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 name:
+ *                   type: string
+ *                 price:
+ *                   type: integer
+ *       500:
+ *         description: "Internal server error"
+ */
+productRouter.get("/isMinPrice", getProductIsMinPrice)
+
+
+/**
+ * @swagger
+ * /products:
+ *   get:
+ *     summary: "Get products filtered by price range"
+ *     description: "Retrieve products that fall within the given price range"
+ *     tags: [Products]
+ *     parameters:
+ *       - in: query
+ *         name: from
+ *         required: true
+ *         description: "Minimum price of the products to filter"
+ *         schema:
+ *           type: integer
+ *       - in: query
+ *         name: to
+ *         required: true
+ *         description: "Maximum price of the products to filter"
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: "Filtered products"
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   name:
+ *                     type: string
+ *                   price:
+ *                     type: integer
+ *       500:
+ *         description: "Internal server error"
+ */
+productRouter.get("/products", getProductsFilterByPrice)
+
+/**
+ * @swagger
  * /productByCountry/{id}:
  *   get:
  *     summary: "Get one from products"
@@ -104,13 +199,13 @@ productRouter.get("/products", getAllProducts)
  *                   old_price:
  *                     type: integer
  *                   available:
- *                     type: boolean
+ *                     type: string
  *                   decription_uz:
  *                     type: string
  *                   decription_ru:
  *                     type: string
  *                   washable:
- *                     type: boolean
+ *                     type: string
  *                   size:
  *                     type: string
  *                   image:
@@ -161,13 +256,13 @@ productRouter.get("/productByCountry/:id", getProductsByCountry)
  *                   old_price:
  *                     type: integer
  *                   available:
- *                     type: boolean
+ *                     type: string
  *                   decription_uz:
  *                     type: string
  *                   decription_ru:
  *                     type: string
  *                   washable:
- *                     type: boolean
+ *                     type: string
  *                   size:
  *                     type: string
  *                   image:
@@ -218,13 +313,13 @@ productRouter.get("/productByCategory/:id", getProductsByCategory)
  *                   old_price:
  *                     type: integer
  *                   available:
- *                     type: boolean
+ *                     type: string
  *                   decription_uz:
  *                     type: string
  *                   decription_ru:
  *                     type: string
  *                   washable:
- *                     type: boolean
+ *                     type: string
  *                   size:
  *                     type: string
  *                   image:
@@ -276,13 +371,13 @@ productRouter.get("/productByBrand/:id", getProductsByBrend)
  *                   old_price:
  *                     type: integer
  *                   available:
- *                     type: boolean
+ *                     type: string
  *                   decription_uz:
  *                     type: string
  *                   decription_ru:
  *                     type: string
  *                   washable:
- *                     type: boolean
+ *                     type: string
  *                   size:
  *                     type: string
  *                   image:
@@ -308,7 +403,7 @@ productRouter.get("/products/:id", getOneProduct)
  *           schema:
  *             type: object
  *             properties:
- *               upfile:
+ *               image:
  *                 type: string
  *                 format: binary
  *               name_uz:
@@ -324,15 +419,17 @@ productRouter.get("/products/:id", getOneProduct)
  *               old_price:
  *                 type: integer
  *               available:
- *                 type: boolean
+ *                 type: string
  *               decription_uz:
  *                 type: string
  *               decription_ru:
  *                 type: string
  *               washable:
- *                 type: boolean
+ *                 type: string
  *               size:
  *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "New product posted successfully"
@@ -356,13 +453,13 @@ productRouter.get("/products/:id", getOneProduct)
  *                 old_price:
  *                   type: integer
  *                 available:
- *                   type: boolean
+ *                   type: string
  *                 decription_uz:
  *                   type: string
  *                 decription_ru:
  *                   type: string
  *                 washable:
- *                   type: boolean
+ *                   type: string
  *                 size:
  *                   type: string
  *                 image:
@@ -389,6 +486,40 @@ productRouter.post("/products", upload.single("image"), createProduct)
  *         description: Numeric ID of the products to retrieve.
  *         schema:
  *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name_uz:
+ *                 type: string
+ *               name_ru:
+ *                 type: string
+ *               brand_id:
+ *                 type: integer
+ *               country_id:
+ *                 type: integer
+ *               price:
+ *                 type: integer
+ *               old_price:
+ *                 type: integer
+ *               available:
+ *                 type: string
+ *               decription_uz:
+ *                 type: string
+ *               decription_ru:
+ *                 type: string
+ *               washable:
+ *                 type: string
+ *               size:
+ *                 type: string
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "a products"
@@ -414,13 +545,13 @@ productRouter.post("/products", upload.single("image"), createProduct)
  *                   old_price:
  *                     type: integer
  *                   available:
- *                     type: boolean
+ *                     type: string
  *                   decription_uz:
  *                     type: string
  *                   decription_ru:
  *                     type: string
  *                   washable:
- *                     type: boolean
+ *                     type: string
  *                   size:
  *                     type: string
  *                   image:
@@ -446,6 +577,8 @@ productRouter.patch("/products/:id", middleWare, selfPolice(["admin", "superadmi
  *         description: Numeric ID of the products to retrieve.
  *         schema:
  *           type: integer
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "a products"
@@ -471,13 +604,13 @@ productRouter.patch("/products/:id", middleWare, selfPolice(["admin", "superadmi
  *                   old_price:
  *                     type: integer
  *                   available:
- *                     type: boolean
+ *                     type: string
  *                   decription_uz:
  *                     type: string
  *                   decription_ru:
  *                     type: string
  *                   washable:
- *                     type: boolean
+ *                     type: string
  *                   size:
  *                     type: string
  *                   image:

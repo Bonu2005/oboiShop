@@ -156,3 +156,4 @@ async function remove(req, res) {
     }
 };
 export { sendPhone, verify, registr, login, createAdmin,update,remove,pegination}
+
