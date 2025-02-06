@@ -100,6 +100,8 @@ categoryItemRoute.get("/categoryItem/:id", findOne)
  *                 type: integer
  *               product_id:
  *                 type: integer
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "post new categoryItem"
@@ -137,6 +139,19 @@ categoryItemRoute.post("/categoryItem", passedRole(["admin", "superadmin"]), cre
  *         description: Numeric ID of the categoryItem to retrieve.
  *         schema:
  *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               category_id:
+ *                 type: string
+ *               product_id:
+ *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "update categoryItem"
@@ -174,6 +189,8 @@ categoryItemRoute.patch("/categoryItem/:id", passedRole(["admin", "superadmin"])
  *         description: Numeric ID of the categoryItem to retrieve.
  *         schema:
  *           type: integer
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "Deleting categoryItem"

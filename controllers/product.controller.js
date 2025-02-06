@@ -78,8 +78,13 @@ async function updateProduct(req, res) {
 async function deleteProduct(req, res) {
     try {
         let { id } = req.params
-        let deletedProduct = await db.query("delete from product where id=?", [id])
-        res.status(200).send("Product successfully deleted!!!")
+        console.log(id);
+        let [data] = await db.query("select * FROM products WHERE id = ?", [id])
+        console.log(data);
+        await db.query("DELETE FROM products WHERE id = ?", [id])
+        await fs.unlink(`./uploads/${data[0].image}`)
+        res.send({ message: "deleted ✅" })
+        return
     } catch (error) {
         console.log(error.message);
     }

@@ -332,6 +332,8 @@ productRouter.get("/products/:id", getOneProduct)
  *                 type: string
  *               size:
  *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "New product posted successfully"
@@ -388,6 +390,40 @@ productRouter.post("/products", upload.single("image"), createProduct)
  *         description: Numeric ID of the products to retrieve.
  *         schema:
  *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name_uz:
+ *                 type: string
+ *               name_ru:
+ *                 type: string
+ *               brand_id:
+ *                 type: integer
+ *               country_id:
+ *                 type: integer
+ *               price:
+ *                 type: integer
+ *               old_price:
+ *                 type: integer
+ *               available:
+ *                 type: string
+ *               decription_uz:
+ *                 type: string
+ *               decription_ru:
+ *                 type: string
+ *               washable:
+ *                 type: string
+ *               size:
+ *                 type: string
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "a products"
@@ -445,6 +481,8 @@ productRouter.patch("/products/:id", middleWare, selfPolice(["admin", "superadmi
  *         description: Numeric ID of the products to retrieve.
  *         schema:
  *           type: integer
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "a products"

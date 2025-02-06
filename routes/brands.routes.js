@@ -101,6 +101,8 @@ brandsRoute.get("/brands/:id", findOne)
  *                 type: string
  *               name_ru:
  *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "New brand posted successfully"
@@ -137,6 +139,22 @@ brandsRoute.post("/brands", passedRole(["admin", "superadmin"]), upload.single("
  *         description: Numeric ID of the brand to retrieve.
  *         schema:
  *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *               name_uz:
+ *                 type: string
+ *               name_ru:
+ *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "update brand"
@@ -176,6 +194,8 @@ brandsRoute.patch("/brands/:id", passedRole(["admin", "superadmin"]), update)
  *         description: Numeric ID of the brand to retrieve.
  *         schema:
  *           type: integer
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "Deleting brand"

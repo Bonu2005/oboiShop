@@ -94,6 +94,8 @@ countryRoute.get("/country/:id", findOne)
  *                 type: string
  *               name_ru:
  *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "post new country"
@@ -132,6 +134,19 @@ countryRoute.post("/country", passedRole(["admin", "superadmin"]), create)
  *         description: Numeric ID of the brand to retrieve.
  *         schema:
  *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name_uz:
+ *                 type: string
+ *               name_ru:
+ *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "update country"
@@ -170,6 +185,8 @@ countryRoute.patch("/country/:id", passedRole(["admin", "superadmin"]), update)
  *         description: Numeric ID of the brand to retrieve.
  *         schema:
  *           type: integer
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "Deleting country"

@@ -1,5 +1,6 @@
 import db from "../config/db.js"
 import { categorySchema } from "../validations/validations.js"
+import { promises as fs } from "fs"
 
 async function findAll(req, res) {
     try {
@@ -33,7 +34,7 @@ async function create(req, res) {
         }
         let { filename } = req.file
         let data = req.body
-        let { value, error } = brandsSchema.validate(data)
+        let { value, error } = categorySchema.validate(data)
         if (error) {
             res.status(400).json({ message: error.message })
             await fs.unlink(`./uploads/${filename}`)
@@ -60,7 +61,7 @@ async function update(req, res) {
         let { id } = req.params
         let keys = Object.keys(req.body)
         let values = Object.values(req.body)
-        let queryKey = keys.map(k += " = ?")
+        let queryKey = keys.map((k) => k += " = ?")
         let updated = await db.query(`UPDATE category SET ${queryKey.join(",")} WHERE id = ?`, [...values, id])
         res.send({ message: "updated ✅" })
     } catch (error) {
@@ -70,8 +71,13 @@ async function update(req, res) {
 async function remove(req, res) {
     try {
         let { id } = req.params
+        console.log(id);
+        let [data] = await db.query("select * FROM category WHERE id = ?", [id])
+        console.log(data);
         await db.query("DELETE FROM category WHERE id = ?", [id])
+        await fs.unlink(`./uploads/${data[0].image}`)
         res.send({ message: "deleted ✅" })
+        return
     } catch (error) {
         console.log(error);
     }

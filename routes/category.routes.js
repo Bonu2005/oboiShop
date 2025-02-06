@@ -15,6 +15,22 @@ const categoryRoute = Router()
 
 /**
  * @swagger
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
+/**
+ * @swagger
+ * security:
+ *   - BearerAuth: []
+ */
+
+/**
+ * @swagger
  * /category:
  *   get:
  *     summary: "Get all category"
@@ -105,6 +121,8 @@ categoryRoute.get("/category/:id", findOne)
  *                 type: string
  *               name_ru:
  *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "New category posted successfully"
@@ -142,6 +160,22 @@ categoryRoute.post("/category", passedRole(["admin", "superadmin"]), upload.sing
  *         description: Numeric ID of the category to retrieve.
  *         schema:
  *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *               name_uz:
+ *                 type: string
+ *               name_ru:
+ *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "update category"
@@ -181,6 +215,8 @@ categoryRoute.patch("/category/:id", passedRole(["admin", "superadmin"]), update
  *         description: Numeric ID of the category to retrieve.
  *         schema:
  *           type: integer
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "Deleting category"
