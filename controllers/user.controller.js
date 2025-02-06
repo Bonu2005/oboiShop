@@ -59,7 +59,6 @@ async function registr(req, res) {
         let hash = await bcryptjs.hash(password, 10)
         let [user] = await db.query("insert into user(phone,fullname,password,role) values(?,?,?,?)", [phone, fullName, hash, "user"])
         console.log(user);
-
         res.status(201).json({ message: "successfully registered" })
     } catch (error) {
         res.status(401).json({ error: error.message })
@@ -69,13 +68,13 @@ async function registr(req, res) {
 async function createAdmin(req,res) {
     try {
         let {phone ,fullName,password} = req.body
-        let {value,error} = userValidation({phone ,fullName,password})
+        let {value,error} = userValidation({phone,  fullName, password})
         if(error){
            return res.status(401).json({error:error.message})
         }
         let findAdmin = await db.query("select * from user where phone=?",[phone])
         if(!findUser.length){
-          return  res.status(201).json({message:"User already registered"})
+          return  res.status(201).json({message: "User already registered"})
         }
         let hash = await bcryptjs.hash(password,10)
         let [user] = await db.query("insert into user(phone,fullname,password,role) values(?,?,?,?)",[phone,fullName,hash,"admin"])

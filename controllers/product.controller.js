@@ -10,6 +10,14 @@ async function getAllProducts(req, res){
     }
 }
 
+async function getProductsFilterByPrice(req, res){
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
 async function getOneProduct(req, res){
     try {
         let {id} = req.params
@@ -19,6 +27,7 @@ async function getOneProduct(req, res){
         console.log(error.message);
     }
 }
+
 
 async function createProduct(req, res){
     try {
