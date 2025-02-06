@@ -49,7 +49,7 @@ async function update(req, res) {
         let { id } = req.params
         let keys = Object.keys(req.body)
         let values = Object.values(req.body)
-        let queryKey = keys.map(k += " = ?")
+        let queryKey = keys.map((k) => (k += " = ?"))
         let updated = await db.query(`UPDATE country SET ${queryKey.join(",")} WHERE id = ?`, [...values, id])
         res.send({ message: "updated ✅" })
     } catch (error) {

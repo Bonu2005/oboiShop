@@ -74,3 +74,10 @@ CREATE TABLE orderItem(
     total_count INT NOT NULL,
     total_price INT NOT NULL
 );
+
+CREATE TABLE sales(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT,
+    discount INT,
+    FOREIGN KEY (product_id) REFERENCES product(id)
+);
