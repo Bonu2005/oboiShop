@@ -1,19 +1,26 @@
 {
-  "name": "oboi-project",
+  "name": "realtimeproject",
   "version": "1.0.0",
-  "main": "index.js",
-  "type": "module",
+  "description": "",
+  "main": "main.js",
   "scripts": {
-    "dev": "nodemon main.js",
+    "dev": "node --watch main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bonu2005/oboiShop.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Bonu2005/oboiShop/issues"
+  },
+  "homepage": "https://github.com/Bonu2005/oboiShop#readme",
   "dependencies": {
     "axios": "^1.7.9",
-    "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
@@ -21,9 +28,7 @@
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.12.0",
-    "npmlog": "^7.0.1",
     "otplib": "^12.0.1",
-    "rimraf": "^6.0.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   }

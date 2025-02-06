@@ -32,6 +32,8 @@ async function create(req, res) {
             return res.send({ validateError: error.details[0].message });
         }
         let { name_uz, name_ru } = req.body
+        
+        
         let [newItem] = await db.query("INSERT INTO country (name_uz, name_ru) VALUES (?, ?)", [name_uz, name_ru])
         if (newItem.affectedRows == 0) {
             return res.status(400).send({ message: "not created ❌" })
@@ -47,7 +49,7 @@ async function update(req, res) {
         let { id } = req.params
         let keys = Object.keys(req.body)
         let values = Object.values(req.body)
-        let queryKey = keys.map(k += " = ?")
+        let queryKey = keys.map((k) => (k += " = ?"))
         let updated = await db.query(`UPDATE country SET ${queryKey.join(",")} WHERE id = ?`, [...values, id])
         res.send({ message: "updated ✅" })
     } catch (error) {

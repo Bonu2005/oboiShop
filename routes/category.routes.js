@@ -1,16 +1,32 @@
 import { Router } from "express";
 import { create, findAll, findOne, remove, update } from "../controllers/category.controller.js";
 import upload from "../multer/multer.js";
+import passedRole from "../middleware/rolePolice.js";
 
 const categoryRoute = Router()
 
-categoryRoute.get("/category", findAll)
 
 /**
  * @swagger
  * tags:
  *   name: Category
  *   description: Category management endpoints
+ */
+
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
+/**
+ * @swagger
+ * security:
+ *   - BearerAuth: []
  */
 
 /**
@@ -40,9 +56,10 @@ categoryRoute.get("/category", findAll)
  *                     type: string
  *       500:
  *         description: "Internal server error"
- */
+*/
 
-categoryRoute.get("/category/:id", findOne)
+categoryRoute.get("/category", findAll)
+
 
 /**
  * @swagger
@@ -51,6 +68,13 @@ categoryRoute.get("/category/:id", findOne)
  *     summary: "Get one from Category"
  *     description: "Retrieve one available category from id"
  *     tags: [Category]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Numeric ID of the category to retrieve.
+ *         schema:
+ *           type: integer
  *     responses:
  *       200:
  *         description: "a category"
@@ -71,40 +95,56 @@ categoryRoute.get("/category/:id", findOne)
  *                     type: string
  *       500:
  *         description: "Internal server error"
- */
+*/
 
-categoryRoute.post("/category", upload.single("image"), create)
+categoryRoute.get("/category/:id", findOne)
+
 
 /**
  * @swagger
  * /category:
  *   post:
- *     summary: "Post category for category"
+ *     summary: "Post category for Category"
  *     description: "Post new category"
  *     tags: [Category]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *               name_uz:
+ *                 type: string
+ *               name_ru:
+ *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
- *         description: "post new category"
+ *         description: "New category posted successfully"
  *         content:
  *           application/json:
  *             schema:
  *               type: object
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                   name_uz:
- *                     type: string
- *                   name_ru:
- *                     type: string
- *                   image:
- *                     type: string
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 name_uz:
+ *                   type: string
+ *                 name_ru:
+ *                   type: string
+ *                 image:
+ *                   type: string  # Bu yerda server tomonidan yuborilgan rasm URLi bo'ladi
  *       500:
  *         description: "Internal server error"
  */
 
-categoryRoute.patch("/category/:id", update)
+categoryRoute.post("/category", passedRole(["admin", "superadmin"]), upload.single("image"), create)
+
 
 /**
  * @swagger
@@ -113,6 +153,29 @@ categoryRoute.patch("/category/:id", update)
  *     summary: "Update something from one category"
  *     description: "Post new category"
  *     tags: [Category]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Numeric ID of the category to retrieve.
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *               name_uz:
+ *                 type: string
+ *               name_ru:
+ *                 type: string
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "update category"
@@ -133,9 +196,10 @@ categoryRoute.patch("/category/:id", update)
  *                     type: string
  *       500:
  *         description: "Internal server error"
- */
+*/
 
-categoryRoute.delete("/category/:id", remove)
+categoryRoute.patch("/category/:id", passedRole(["admin", "superadmin"]), update)
+
 
 /**
  * @swagger
@@ -144,6 +208,15 @@ categoryRoute.delete("/category/:id", remove)
  *     summary: "Delete one category"
  *     description: "Deleting category"
  *     tags: [Category]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Numeric ID of the category to retrieve.
+ *         schema:
+ *           type: integer
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: "Deleting category"
@@ -164,6 +237,8 @@ categoryRoute.delete("/category/:id", remove)
  *                     type: string
  *       500:
  *         description: "Internal server error"
- */
+*/
+
+categoryRoute.delete("/category/:id", passedRole(["admin"]), remove)
 
 export default categoryRoute
