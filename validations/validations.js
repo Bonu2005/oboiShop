@@ -20,4 +20,9 @@ const categoryItemSchema = joi.object({
     product_id: joi.number().required()
 });
 
-export { brandsSchema, countrySchema, categoryItemSchema, categorySchema }
+const skidkaSchema = joi.object({
+    product_id: joi.number().required(),
+    discount: joi.number().min(1).max(100).required()
+});
+
+export { brandsSchema, countrySchema, categoryItemSchema, categorySchema, skidkaSchema }
