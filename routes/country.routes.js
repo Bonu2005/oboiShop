@@ -14,12 +14,27 @@ const countryRoute = Router()
  * @swagger
  * /country:
  *   get:
- *     summary: "Get all country"
- *     description: "Retrieve a list of all available country"
+ *     summary: "Get all countries"
+ *     description: "Retrieve a list of all available countries with optional pagination"
  *     tags: [Country]
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         required: false
+ *         description: "Page number for pagination"
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - in: query
+ *         name: limit
+ *         required: false
+ *         description: "Number of items per page"
+ *         schema:
+ *           type: integer
+ *           default: 10
  *     responses:
  *       200:
- *         description: "A list of country"
+ *         description: "A list of countries"
  *         content:
  *           application/json:
  *             schema:
@@ -36,7 +51,7 @@ const countryRoute = Router()
  *       500:
  *         description: "Internal server error"
  */
-countryRoute.get("/country", findAll)
+countryRoute.get("/country", findAll);
 
 
 /**
