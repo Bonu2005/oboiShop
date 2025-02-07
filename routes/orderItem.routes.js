@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createOrderItem, deleteOrderItem, getOneOrderItem, getOrderItems, updateOrderItem } from "../controllers/orderItem.controller.js";
+import { createOrderItem, deleteOrderItem, getOneOrderItem, getOrderItems, pegination, updateOrderItem } from "../controllers/orderItem.controller.js";
 import selfPolice from "../middleware/selfPolice.js";
 import passedRole from "../middleware/rolePolice.js";
 import middleWare from "../middleware/token.middleware.js";
@@ -211,5 +211,5 @@ orderItemRouter.patch("/orderItem/:id", selfPolice(["admin"]), updateOrderItem)
 */
 
 orderItemRouter.delete("/orderItem/:id", passedRole(["admin", "superadmin"]), deleteOrderItem)
-
+orderItemRouter.get("/orderItemPagination?:page?:take", pegination)
 export default orderItemRouter

@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { createAdmin, login, registr, sendPhone ,verify,update,remove} from "../controllers/user.controller.js";
+
+import { createAdmin, login, registr, sendPhone ,verify,update,remove,pegination} from "../controllers/user.controller.js";
 import  passedRole from "../middleware/rolePolice.js"
 import middleWare from "../middleware/token.middleware.js";
 import selfPolice from "../middleware/selfPolice.js";
@@ -231,6 +232,7 @@ userRoute.post("/login",login)
  */
 
 userRoute.post("/createAdmin",passedRole(["admin"]),createAdmin)
+userRoute.get("/userPagination?:page?:take",passedRole(["admin"]),pegination)
 
 
 /**

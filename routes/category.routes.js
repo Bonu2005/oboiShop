@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { create, findAll, findOne, remove, update } from "../controllers/category.controller.js";
+import { create, findAll, findOne, remove, update,pegination } from "../controllers/category.controller.js";
 import upload from "../multer/multer.js";
 import passedRole from "../middleware/rolePolice.js";
+
 
 const categoryRoute = Router()
 
@@ -239,6 +240,8 @@ categoryRoute.patch("/category/:id", passedRole(["admin", "superadmin"]), update
  *         description: "Internal server error"
 */
 
+
+categoryRoute.get("/categoryPagination?:page?:take", pegination)
 categoryRoute.delete("/category/:id", passedRole(["admin"]), remove)
 
 export default categoryRoute

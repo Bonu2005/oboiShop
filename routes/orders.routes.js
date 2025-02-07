@@ -212,5 +212,5 @@ ordersRouter.patch("/orders/:id", middleWare,  updateOrder)
 */
 
 ordersRouter.delete("/orders/:id", middleWare, deleteOrder)
-
+ordersRouter.get("/ordersPagination?:page?:take", middleWare, deleteOrder)
 export default ordersRouter

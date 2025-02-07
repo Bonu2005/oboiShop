@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { create, findAll, findOne, remove, update } from "../controllers/brands.controller.js";
+import { create, findAll, findOne, pegination, remove, update } from "../controllers/brands.controller.js";
 import upload from "../multer/multer.js";
 import passedRole from "../middleware/rolePolice.js";
 
@@ -218,6 +218,7 @@ brandsRoute.patch("/brands/:id", passedRole(["admin", "superadmin"]), update)
  *         description: "Internal server error"
 */
 
+brandsRoute.get("/brandsPagination?:page?:take", pegination)
 brandsRoute.delete("/brands/:id", passedRole(["admin"]), remove)
 
 export default brandsRoute

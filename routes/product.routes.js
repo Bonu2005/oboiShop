@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { createProduct, deleteProduct, getAllProducts, getOneProduct, getProductIsMaxPrice, getProductIsMinPrice, getProductsByBrend, getProductsByCategory, getProductsByCountry, getProductsFilterByPrice, updateProduct } from "../controllers/product.controller.js";
+import {pegination, createProduct, deleteProduct, getAllProducts, getOneProduct, getProductIsMaxPrice, getProductIsMinPrice, getProductsByBrend, getProductsByCategory, getProductsByCountry, getProductsFilterByPrice, updateProduct } from "../controllers/product.controller.js";
 import passedRole from "../middleware/rolePolice.js";
 import selfPolice from "../middleware/selfPolice.js";
 import middleWare from "../middleware/token.middleware.js";
 import upload from "../multer/multer.js";
+
 
 let productRouter = Router()
 
@@ -619,5 +620,5 @@ productRouter.patch("/products/:id", middleWare, selfPolice(["admin", "superadmi
 */
 
 productRouter.delete("/products/:id", middleWare, passedRole(["admin", "superadmin"]), deleteProduct)
-
+productRouter.get("/products?:page?:take", middleWare, passedRole(["admin", "superadmin"]), pegination)
 export default productRouter

@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { create, findAll, findOne, remove, update } from "../controllers/categoryItem.controller.js";
+import { create, findAll, findOne, remove, update,pegination } from "../controllers/categoryItem.controller.js";
+
 import passedRole from "../middleware/rolePolice.js";
 
 const categoryItemRoute = Router()
@@ -211,6 +212,7 @@ categoryItemRoute.patch("/categoryItem/:id", passedRole(["admin", "superadmin"])
  *         description: "Internal server error"
 */
 
+categoryItemRoute.get("/categoryItemPagination?:page?:take", pegination)
 categoryItemRoute.delete("/categoryItem/:id", passedRole(["admin"]), remove)
 
 export default categoryItemRoute

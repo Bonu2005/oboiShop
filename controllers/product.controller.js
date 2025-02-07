@@ -10,7 +10,6 @@ async function getAllProducts(req, res) {
     }
 }
 
-
 async function getProductsFilterByPrice(req, res){
     try {
         let {from, to} = req.query
@@ -150,5 +149,30 @@ async function getProductsByBrend(req, res) {
         console.log(error.message);
     }
 }
+async function pegination(req, res) {
+    try {
+        if(!take){
+            let pageNumber = parseInt(page, 10) || 0;  
+            let takeNumber =10
+    
+        let offset = (pageNumber-1) * takeNumber;
+        let [get] = await db.query("select * from product limit ? OFFSET ? ",[takeNumber,offset])
+        res.json({data : get })
+        return
+        }
+        let {page,take}=req.query
+        let pageNumber = parseInt(page, 10) || 0;  
+        let takeNumber = parseInt(take, 10) || 10; 
+    
+        let offset = pageNumber * takeNumber;
+        let [get] = await db.query("select * from product limit ? OFFSET ? ",[takeNumber,offset])
+        res.json({data : get })
+        
+    } catch (error) {
+        res.status(400).json({error:error.message})
+    }
+};
 
-export { getAllProducts, getOneProduct, createProduct, updateProduct, getProductsByBrend, getProductsByCountry, deleteProduct, getProductsByCategory, getProductIsMaxPrice, getProductIsMinPrice, getProductsFilterByPrice }
+
+export { getAllProducts, getOneProduct, createProduct, updateProduct, getProductsByBrend, getProductsByCountry, deleteProduct, getProductsByCategory, getProductIsMaxPrice, getProductIsMinPrice, getProductsFilterByPrice,pegination }
+

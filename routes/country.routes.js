@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { create, findAll, findOne, remove, update } from "../controllers/country.controller.js";
+import { create, findAll, findOne, remove, update,pegination } from "../controllers/country.controller.js";
+
 import passedRole from "../middleware/rolePolice.js";
 
 const countryRoute = Router()
@@ -222,6 +223,8 @@ countryRoute.patch("/country/:id", passedRole(["admin", "superadmin"]), update)
  *         description: "Internal server error"
 */
 
+
+countryRoute.get("/countryPagination?:page?:take", pegination)
 countryRoute.delete("/country/:id", passedRole(["admin"]), remove)
 
 export default countryRoute
