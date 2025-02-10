@@ -1,6 +1,7 @@
+-- Active: 1739048153807@@127.0.0.1@3306@oboishop
 CREATE DATABASE oboiShop;
 use oboiShop;
-DROP DATABASE oboiShop;
+DROP DATABASE  oboiShop; 
 CREATE Table user(
     id int PRIMARY KEY AUTO_INCREMENT,
     fullName VARCHAR(100),
@@ -71,6 +72,7 @@ CREATE Table orders(
     user_id INT NOT NULL,
     Foreign Key (user_id) REFERENCES user(id),
     total_price INT NOT NULL
+    
 );
 
 CREATE TABLE orderItem(
@@ -89,3 +91,5 @@ CREATE TABLE sales(
     discount INT,
     FOREIGN KEY (product_id) REFERENCES product(id)
 );
+
+SELECT * FROM product WHERE id = 1;

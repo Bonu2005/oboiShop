@@ -6,4 +6,5 @@ const db = await mysql.createConnection({
     password:"ismoayeel",
     database:"oboiShop"
 })
-export default db 
+export default db
+

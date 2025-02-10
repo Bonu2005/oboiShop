@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createOrder, getOneOrder, getOrder } from "../controllers/order.controller.js";
+import {create, getOneOrder, getOrder } from "../controllers/order.controller.js";
 import middleWare from "../middleware/token.middleware.js";
 
 const ordersRouter = Router()
@@ -123,8 +123,6 @@ ordersRouter.get("/orders/:id", middleWare, getOneOrder)
  *         description: "Internal server error"
 */
 
-ordersRouter.post("/orders", createOrder)
+ordersRouter.post("/orders", create)
 
-
-ordersRouter.get("/ordersPagination?:page?:take", middleWare)
 export default ordersRouter
