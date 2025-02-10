@@ -6,9 +6,8 @@ function selfPolice(roles) {
          next();
          return;
       }
- 
       res.status(400).send({ message: "Not allowed update" });
    };
 }
- 
+
 export default selfPolice;

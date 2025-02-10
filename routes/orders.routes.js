@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createOrder, deleteOrder, getOneOrder, getOrder, updateOrder } from "../controllers/order.controller.js";
+import { createOrder, getOneOrder, getOrder } from "../controllers/order.controller.js";
 import middleWare from "../middleware/token.middleware.js";
 
 const ordersRouter = Router()
@@ -39,7 +39,7 @@ const ordersRouter = Router()
  *         description: "Internal server error"
 */
 
-ordersRouter.get("/orders", middleWare, getOrder)
+ordersRouter.get("/orders",  getOrder)
 
 
 /**
@@ -93,12 +93,12 @@ ordersRouter.get("/orders/:id", middleWare, getOneOrder)
  *           schema:
  *             type: object
  *             properties:
- *               name_uz:
- *                 type: string
- *               name_ru:
- *                 type: string
- *               image:
- *                 type: string
+ *               user_id:
+ *                 type: integer
+ *               total_price:
+ *                 type: integer
+ *               products:
+ *                 type: array
  *     security:
  *       - BearerAuth: []
  *     responses:
@@ -117,100 +117,14 @@ ordersRouter.get("/orders/:id", middleWare, getOneOrder)
  *                     type: integer
  *                   total_price:
  *                     type: integer
+ *                   products:
+ *                     type: array
  *       500:
  *         description: "Internal server error"
 */
 
-ordersRouter.post("/orders", middleWare, createOrder)
+ordersRouter.post("/orders", createOrder)
 
 
-/**
- * @swagger
- * /orders/{id}:
- *   patch:
- *     summary: "Update something from one orders"
- *     description: "Post new orders"
- *     tags: [Orders]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: Numeric ID of the orders to retrieve.
- *         schema:
- *           type: integer
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               user_id:
- *                 type: string
- *               total_price:
- *                 type: string
- *     security:
- *       - BearerAuth: []
- *     responses:
- *       200:
- *         description: "update orders"
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                   user_id:
- *                     type: integer
- *                   total_price:
- *                     type: integer
- *       500:
- *         description: "Internal server error"
-*/
-
-ordersRouter.patch("/orders/:id", middleWare,  updateOrder)
-
-
-
-/**
- * @swagger
- * /orders/{id}:
- *   delete:
- *     summary: "Delete one orders"
- *     description: "Deleting orders"
- *     tags: [Orders]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: Numeric ID of the orders to retrieve.
- *         schema:
- *           type: integer
- *     security:
- *       - BearerAuth: []
- *     responses:
- *       200:
- *         description: "Deleting orders"
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                   user_id:
- *                     type: integer
- *                   total_price:
- *                     type: integer
- *       500:
- *         description: "Internal server error"
-*/
-
-ordersRouter.delete("/orders/:id", middleWare, deleteOrder)
-ordersRouter.get("/ordersPagination?:page?:take", middleWare, deleteOrder)
+ordersRouter.get("/ordersPagination?:page?:take", middleWare)
 export default ordersRouter

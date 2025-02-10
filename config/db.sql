@@ -39,6 +39,8 @@ CREATE TABLE categoryItem(
     Foreign Key (product_id) REFERENCES product(id)
 );
 
+SELECT * FROM categoryitem;
+
 CREATE Table product(
     id INT AUTO_INCREMENT PRIMARY KEY,
     name_uz VARCHAR(255) NOT NULL,
@@ -57,6 +59,12 @@ CREATE Table product(
     image VARCHAR(255)
 );
 
+SELECT * FROM product;
+SELECT * FROM orderItem;
+SELECT * FROM orders;
+SELECT * FROM product;
+
+INSERT INTO product (name_uz, name_ru, brand_id, country_id, price, old_price, available, decription_uz, decription_ru, washable, size, image) VALUES("qwerty", "йцукен", 1, 1, 13389, 231436, "true", "dadsfcbhasnfygak", "ыугфситфадпашфныгщб", "true", "medium", "aefsefxs.jgp")
 
 CREATE Table orders(
     id INT AUTO_INCREMENT PRIMARY KEY,

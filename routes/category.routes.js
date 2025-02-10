@@ -122,6 +122,8 @@ categoryRoute.get("/category/:id", findOne)
  *                 type: string
  *               name_ru:
  *                 type: string
+ *               products:
+ *                 type: array
  *     security:
  *       - BearerAuth: []
  *     responses:
@@ -139,12 +141,14 @@ categoryRoute.get("/category/:id", findOne)
  *                 name_ru:
  *                   type: string
  *                 image:
- *                   type: string  # Bu yerda server tomonidan yuborilgan rasm URLi bo'ladi
+ *                   type: string
+ *                 products:
+ *                   type: array
  *       500:
  *         description: "Internal server error"
  */
 
-categoryRoute.post("/category", passedRole(["admin", "superadmin"]), upload.single("image"), create)
+categoryRoute.post("/category", upload.single("image"), create)
 
 
 /**

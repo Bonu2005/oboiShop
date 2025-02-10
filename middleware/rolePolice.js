@@ -16,7 +16,6 @@ function passedRole(roles) {
       try {
          let decoded = jwt.verify(token, process.env.TOKEN);
          req.malumot = decoded;
-
          if (roles.includes(decoded.role)) {
             next();
          } else {
