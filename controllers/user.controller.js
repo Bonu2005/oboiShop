@@ -94,6 +94,8 @@ async function createAdmin(req, res) {
 async function login(req, res) {
     try {
         let { phone, password } = req.body
+        console.log(phone, password);
+        
         let [userFind] = await db.query("select * from user where phone=?", [phone])
         console.log(userFind);
 

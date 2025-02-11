@@ -177,7 +177,7 @@ brandsRoute.post("/brands", passedRole(["admin", "superadmin"]), upload.single("
  *         description: "Internal server error"
 */
 
-brandsRoute.patch("/brands/:id", passedRole(["admin", "superadmin"]), update)
+brandsRoute.patch("/brands/:id", passedRole(["admin", "superadmin"]),upload.single("image"), update)
 
 
 /**

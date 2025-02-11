@@ -73,8 +73,6 @@ userRoute.get("/verify/:otp1/:phone",verify)
  *           schema:
  *             type: object
  *             properties:
- *               fullname:
- *                 type: string
  *               phone:
  *                 type: string
  *               password:
@@ -113,13 +111,13 @@ userRoute.post("/sendPhone",sendPhone)
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             type: object
  *             properties:
- *               fullname:
- *                 type: string
  *               phone:
+ *                 type: string
+ *               fullName:
  *                 type: string
  *               password:
  *                 type: string
@@ -158,7 +156,7 @@ userRoute.post("/registr",registr)
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             type: object
  *             properties:

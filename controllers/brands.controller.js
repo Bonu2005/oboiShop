@@ -49,7 +49,7 @@ async function create(req, res) {
         let createdProduct = await db.query("insert into brands(name_uz, name_ru, image) values(?, ?, ?)",
             [newOne.name_uz, newOne.name_ru, newOne.image])
         console.log(createdProduct);
-        res.status(200).send("Product successfully created!!!")
+        res.status(200).send("Brand successfully created!!!")
     } catch (error) {
         console.log(error);
     }

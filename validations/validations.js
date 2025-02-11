@@ -12,8 +12,7 @@ const countrySchema = joi.object({
 
 const categorySchema = joi.object({
     name_uz: joi.string().required(),
-    name_ru: joi.string().required(),
-    products: joi.array().required()
+    name_ru: joi.string().required()
 });
 
 const categoryItemSchema = joi.object({

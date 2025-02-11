@@ -424,6 +424,8 @@ productRouter.get("/products/:id", getOneProduct)
  *                 type: string
  *               decription_ru:
  *                 type: string
+ *               categoriesID:
+ *                 type: string
  *               washable:
  *                 type: string
  *               size:
@@ -459,6 +461,8 @@ productRouter.get("/products/:id", getOneProduct)
  *                 decription_ru:
  *                   type: string
  *                 washable:
+ *                   type: string
+ *                 categoriesID:
  *                   type: string
  *                 size:
  *                   type: string

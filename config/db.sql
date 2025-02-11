@@ -1,4 +1,3 @@
--- Active: 1739048153807@@127.0.0.1@3306@oboishop
 CREATE DATABASE oboiShop;
 use oboiShop;
 DROP DATABASE  oboiShop; 
@@ -10,7 +9,7 @@ CREATE Table user(
     role ENUM("user","admin","superadmin") DEFAULT ("user")
 );
 INSERT INTO user(fullName,phone,password,role)
-VALUES("Alex Roy","9982222222","alex1234","admin");
+VALUES("Alex Roy","998222222222","alex1234","admin");
 
 CREATE TABLE category(
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -40,7 +39,7 @@ CREATE TABLE categoryItem(
     Foreign Key (product_id) REFERENCES product(id)
 );
 
-SELECT * FROM categoryitem;
+SELECT * FROM categoryItem;
 
 CREATE Table product(
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -56,6 +55,7 @@ CREATE Table product(
     decription_uz VARCHAR(255),
     decription_ru VARCHAR(255),
     washable VARCHAR(255),
+    categoriesID VARCHAR(255),
     size VARCHAR(55),
     image VARCHAR(255)
 );
@@ -72,8 +72,11 @@ CREATE Table orders(
     user_id INT NOT NULL,
     Foreign Key (user_id) REFERENCES user(id),
     total_price INT NOT NULL
-    
 );
+
+INSERT INTO orders(user_id, total_price) VALUES(1, 346852);
+
+SELECT * FROM orders;
 
 CREATE TABLE orderItem(
     id INT AUTO_INCREMENT PRIMARY KEY,
